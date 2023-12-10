@@ -21,7 +21,8 @@ internal class ToolbarReserializeAll : BaseToolbarElement {
 
 	protected override void OnDrawInToolbar() {
 		if (GUILayout.Button(reserializeAllBtn, UnityToolbarExtender.ToolbarStyles.commandButtonStyle)) {
-			UnityToolbarExtender.ForceReserializeAssetsUtils.ForceReserializeAllAssets();
+			if(EditorUtility.DisplayDialog("Reserialize All Assets", "Did you want reserialize all asset?","Yes","No"))
+				UnityToolbarExtender.ForceReserializeAssetsUtils.ForceReserializeAllAssets();
 		}
 	}
 }
