@@ -11,7 +11,7 @@ namespace EGFramework.Runtime.Asset
         {
             get
             {
-                var mode = FrameworkSettingUtil.GlobalSettings.assetEncryptionMode;
+                var mode = FrameworkSettingUtil.GlobalSettings.assetEncryption;
                 switch (mode)
                 {
                     case EncryptionMode.Offset:

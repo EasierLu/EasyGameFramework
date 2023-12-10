@@ -31,7 +31,8 @@ namespace EGFramework.Editor.Setting
             base.OnGUI(searchContext);
             using var changeCheckScope = new EditorGUI.ChangeCheckScope();
 
-            EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_AssetEncryptionMode"));
+            EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_RuntimeAssetMode"));
+            EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_AssetEncryption"));
             EditorGUILayout.LabelField("123");
 
             EditorGUILayout.Space(20);

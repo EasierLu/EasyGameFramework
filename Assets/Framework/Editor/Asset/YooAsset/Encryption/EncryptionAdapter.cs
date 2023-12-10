@@ -13,7 +13,7 @@ namespace EGFramework.Editor.Asset
     {
         public EncryptResult Encrypt(EncryptFileInfo fileInfo)
         {
-            switch (FrameworkSettingUtil.GlobalSettings.assetEncryptionMode)
+            switch (FrameworkSettingUtil.GlobalSettings.assetEncryption)
             {
                 case EncryptionMode.Offset:
                     return FileOffsetEncryption.DoEncrypt(fileInfo);

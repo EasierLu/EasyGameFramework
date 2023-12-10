@@ -15,12 +15,17 @@ namespace EGFramework.Runtime.Setting
         public static string FrameworkWorkPath = "Assets/Framework";
 
         [Header("Asset")]
-        [Header("EncryptionMode")]
+        [SerializeField]
+        [Tooltip("资源更新模式")]
+        private AssetMode m_RuntimeAssetMode = AssetMode.HostPlay;
+        public AssetMode runtimeAssetMode { get => m_RuntimeAssetMode; }
+
         [SerializeField]
         [Tooltip("资源加密模式")]
-        private EncryptionMode m_AssetEncryptionMode = EncryptionMode.None;
-        public EncryptionMode assetEncryptionMode { get => m_AssetEncryptionMode; }
+        private EncryptionMode m_AssetEncryption = EncryptionMode.None;
+        public EncryptionMode assetEncryption { get => m_AssetEncryption; }
 
+        
     }
 
 }
