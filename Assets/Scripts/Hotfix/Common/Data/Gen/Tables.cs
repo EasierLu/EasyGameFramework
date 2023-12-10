@@ -25,18 +25,14 @@ namespace Hotfix.Common.Data
         /// <summary> 语言表 </summary>
         public L10n.TbLanguage TbLanguage {get; private set;}
 
-        public Tables()
-        {
-        }
-
-        public Tables(System.Func<string, ByteBuf> loader)
+        private void Load(System.Func<string, ByteBuf> loader)
         {
             //例子
-            TbExampleBaseStruct = new Example.TbExampleBaseStruct(loader("example"));
+            TbExampleBaseStruct = new Example.TbExampleBaseStruct(loader("example_tbexamplebasestruct"));
             //进阶例子
-            TbExampleExtendStruct = new Example.TbExampleExtendStruct(loader("example"));
+            TbExampleExtendStruct = new Example.TbExampleExtendStruct(loader("example_tbexampleextendstruct"));
             //
-            TbExampleItemData = new Example.TbExampleItemData(loader("example"));
+            TbExampleItemData = new Example.TbExampleItemData(loader("example_tbexampleitemdata"));
             //道具表
             TbItemData = new Item.TbItemData(loader("item_tbitemdata"));
             //全局配置表
@@ -51,17 +47,17 @@ namespace Hotfix.Common.Data
             int tablesNum = 6;
             
             //例子
-            var TbExampleBaseStruct_loader = await loader("example");
+            var TbExampleBaseStruct_loader = await loader("example_tbexamplebasestruct");
             TbExampleBaseStruct = new Example.TbExampleBaseStruct(TbExampleBaseStruct_loader);
             progress?.Report(1f / tablesNum);
 
             //进阶例子
-            var TbExampleExtendStruct_loader = await loader("example");
+            var TbExampleExtendStruct_loader = await loader("example_tbexampleextendstruct");
             TbExampleExtendStruct = new Example.TbExampleExtendStruct(TbExampleExtendStruct_loader);
             progress?.Report(2f / tablesNum);
 
             //
-            var TbExampleItemData_loader = await loader("example");
+            var TbExampleItemData_loader = await loader("example_tbexampleitemdata");
             TbExampleItemData = new Example.TbExampleItemData(TbExampleItemData_loader);
             progress?.Report(3f / tablesNum);
 
@@ -92,6 +88,22 @@ namespace Hotfix.Common.Data
             TbItemData.ResolveRef(this);
             TbGlobalConfig.ResolveRef(this);
             TbLanguage.ResolveRef(this);
+        }
+
+        public void Dispose()
+        {
+            //例子
+            TbExampleBaseStruct = null;
+            //进阶例子
+            TbExampleExtendStruct = null;
+            //
+            TbExampleItemData = null;
+            //道具表
+            TbItemData = null;
+            //全局配置表
+            TbGlobalConfig = null;
+            //语言表
+            TbLanguage = null;
         }
     }
 

@@ -78,7 +78,7 @@ MonoBehaviour:
   include_tag: 
   exclude_tag: 
   time_zone: China Standard Time
-  custom_template_dir: 
+  custom_template_dir: DataTables/Templates
   output_table: []
   multi_code_target: 0
   code_target: cs-bin
@@ -107,17 +107,20 @@ MonoBehaviour:
 
     --timeZone "China Standard Time" ^
 
+    --customTemplateDir DataTables/Templates
+    ^
+
     -c cs-bin ^
 
-    -d bin
+    -d bin ^
+
+    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
     ^
 
-    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
+    -x outputDataDir=Assets/AssetsPackage/Data ^
 
-    -x outputDataDir=Assets/AssetsPackage/Data
+    -x codeStyle=csharp-default
     ^
-
-    -x codeStyle=csharp-default ^
 
     -x dataExporter=default ^
 
@@ -131,17 +134,20 @@ MonoBehaviour:
 
     --timeZone "China Standard Time" ^
 
+    --customTemplateDir DataTables/Templates
+    ^
+
     -c cs-bin ^
 
-    -d bin
+    -d bin ^
+
+    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
     ^
 
-    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
+    -x outputDataDir=Assets/AssetsPackage/Data ^
 
-    -x outputDataDir=Assets/AssetsPackage/Data
+    -x codeStyle=csharp-default
     ^
-
-    -x codeStyle=csharp-default ^
 
     -x dataExporter=default ^
 

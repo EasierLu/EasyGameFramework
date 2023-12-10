@@ -75,7 +75,7 @@ MonoBehaviour:
         CollectorGUID: ca5789b49c1268549bb035494e2558ce
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackCollector
+        PackRuleName: PackSeparately
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 

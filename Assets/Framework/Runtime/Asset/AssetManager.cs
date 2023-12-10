@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using YooAsset;
-using static UnityEngine.UI.AspectRatioFitter;
 
 namespace EGFramework.Runtime
 {
@@ -16,6 +15,9 @@ namespace EGFramework.Runtime
         public string updataUrl { get; set; }
 
         private ResourcePackage m_Package;
+        private Dictionary<string, AssetHandle> m_AssetHandle = new Dictionary<string, AssetHandle>();
+        private Dictionary<string, AllAssetsHandle> m_AllAssetHandle = new Dictionary<string, AllAssetsHandle>();
+        private Dictionary<string, RawFileHandle> m_RawFileHandle = new Dictionary<string, RawFileHandle>();
 
         public async UniTask Initialize()
         {
@@ -52,9 +54,14 @@ namespace EGFramework.Runtime
         {
             if (assetMode == AssetMode.Editor)
             {
+#if UNITY_EDITOR
                 var initParameters = new EditorSimulateModeParameters();
-                initParameters.SimulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild("ScriptableBuildPipeline", "DefaultPackage");
+                initParameters.SimulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.ScriptableBuildPipeline, "DefaultPackage");
+                Debug.Log(initParameters.SimulateManifestFilePath);
                 return initParameters;
+#else   
+                return null;
+#endif
             }
             else if (assetMode == AssetMode.HostPlay)
             {
@@ -80,12 +87,39 @@ namespace EGFramework.Runtime
 
         public Object[] LoadAllAasset(string path)
         {
+            //if (m_AllAssetHandle.ContainsKey(path))
+            //{
+            //    return m_AllAssetHandle[path].AllAssetObjects;
+            //}
+            //AllAssetsHandle handle = m_Package.LoadAllAssetsSync(path);
+            //m_AllAssetHandle.Add(path, handle);
+
+            //return handle.AllAssetObjects;
             throw new System.NotImplementedException();
         }
 
-        public UniTask<Object[]> LoadAllAssetAsync(string path)
+        public async UniTask<Object[]> LoadAllAssetAsync(string path)
         {
-            throw new System.NotImplementedException();
+            return await LoadAllAssetAsync<Object>(path);
+        }
+
+        public async UniTask<Object[]> LoadAllAssetAsync<T>(string path)
+        {
+            AllAssetsHandle handle;
+            if (m_AllAssetHandle.ContainsKey(path))
+            {
+                handle = m_AllAssetHandle[path];
+                if (!handle.IsDone)
+                {
+                    await handle;
+                }
+                return handle.AllAssetObjects;
+            }
+
+            handle = m_Package.LoadAllAssetsAsync(path);
+            m_AllAssetHandle.Add(path, handle);
+            await handle;
+            return handle.AllAssetObjects;
         }
 
         public T LoadAsset<T>(string path) where T : Object
@@ -95,9 +129,25 @@ namespace EGFramework.Runtime
 
         public async UniTask<T> LoadAssetAsync<T>(string path) where T : Object
         {
-            var assetHandle = m_Package.LoadAssetAsync(path);
-            await assetHandle;
-            return assetHandle.AssetObject as T;
+            T asset;
+            if (m_AssetHandle.ContainsKey(path))
+            {
+                var handle = m_AssetHandle[path];
+                if (!handle.IsDone)
+                {
+                    await handle;
+                }
+                asset = m_AssetHandle[path].AssetObject as T;
+            }
+            else
+            {
+                var assetHandle = m_Package.LoadAssetAsync(path);
+                m_AssetHandle.Add(path, assetHandle);
+                await assetHandle;
+                asset = assetHandle.AssetObject as T;
+            }
+            
+            return asset;
         }
 
         public byte[] LoadRawFile(string path)
@@ -105,9 +155,27 @@ namespace EGFramework.Runtime
             throw new System.NotImplementedException();
         }
 
-        public UniTask<byte[]> LoadRawFileAsync(string path)
+        public async UniTask<byte[]> LoadRawFileAsync(string path)
         {
-            throw new System.NotImplementedException();
+            byte[] asset;
+            if (m_RawFileHandle.ContainsKey(path))
+            {
+                var handle = m_RawFileHandle[path];
+                if (!handle.IsDone)
+                {
+                    await handle;
+                }
+                asset = handle.GetRawFileData();
+            }
+            else
+            {
+                var handle = m_Package.LoadRawFileAsync(path);
+                m_RawFileHandle.Add(path, handle);
+                await handle;
+                asset = handle.GetRawFileData();
+            }
+
+            return asset;
         }
 
         public UniTask LoadSceneAsync()
@@ -116,6 +184,41 @@ namespace EGFramework.Runtime
         }
 
         UniTaskVoid IAssetManager.Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async UniTaskVoid ReleaseAsset(string path)
+        {
+            if(m_AssetHandle.ContainsKey(path))
+            {
+                var handle = m_AssetHandle[path];
+                if (!handle.IsDone)
+                {
+                    await handle;
+                    await UniTask.Delay(100);
+                }
+                m_AssetHandle[path].Release();
+                m_AssetHandle.Remove(path);
+            }
+        }
+
+        public async UniTaskVoid ReleaseRawFile(string path)
+        {
+            if (m_RawFileHandle.ContainsKey(path))
+            {
+                var handle = m_RawFileHandle[path];
+                if (!handle.IsDone)
+                {
+                    await handle;
+                    await UniTask.Delay(100);
+                }
+                handle.Release();
+                m_RawFileHandle.Remove(path);
+            }
+        }
+
+        public void UnloadAssets()
         {
             throw new System.NotImplementedException();
         }

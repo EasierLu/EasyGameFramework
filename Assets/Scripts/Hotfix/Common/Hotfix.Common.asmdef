@@ -3,7 +3,8 @@
     "rootNamespace": "Hotfix.Common",
     "references": [
         "GUID:8217794baac49994d8ab6635f8e85f3e",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:15e51a89972cfa04880866fa08590075"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

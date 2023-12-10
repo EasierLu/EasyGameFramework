@@ -10,11 +10,7 @@ using Luban;
         public {{table.full_name}} {{format_property_name __code_style table.name}} {get; private set;}
         {{~end~}}
 
-        public {{__name}}()
-        {
-        }
-
-        public {{__name}}(System.Func<string, ByteBuf> loader)
+        private void Load(System.Func<string, ByteBuf> loader)
         {
             {{~for table in __tables ~}}
             //{{escape_comment table.comment}}
@@ -42,6 +38,14 @@ using Luban;
         {
             {{~for table in __tables ~}}
             {{format_property_name __code_style table.name}}.ResolveRef(this);
+            {{~end~}}
+        }
+
+        public void Dispose()
+        {
+            {{~for table in __tables ~}}
+            //{{escape_comment table.comment}}
+            {{format_property_name __code_style table.name}} = null;
             {{~end~}}
         }
     }

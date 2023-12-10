@@ -17,7 +17,7 @@ namespace EGFramework.Runtime
 
         T LoadAsset<T>(string path) where T : UnityEngine.Object;
 
-        UniTask<T> LoadAssetAsync<T>(string path)where T : UnityEngine.Object;
+        UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object;
 
         UnityEngine.Object[] LoadAllAasset(string path);
 
@@ -26,5 +26,11 @@ namespace EGFramework.Runtime
         byte[] LoadRawFile(string path);
 
         UniTask<byte[]> LoadRawFileAsync(string path);
+
+        UniTaskVoid ReleaseAsset(string path);
+
+        UniTaskVoid ReleaseRawFile(string path);
+
+        void UnloadAssets();
     }
 }
