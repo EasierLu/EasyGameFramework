@@ -17,6 +17,9 @@ namespace Hotfix.Common.Data
         public Example.TbExampleBaseStruct TbExampleBaseStruct {get; private set;}
         /// <summary> 进阶例子 </summary>
         public Example.TbExampleExtendStruct TbExampleExtendStruct {get; private set;}
+        /// <summary> 测试 </summary>
+        public Example.TbBenchmark TbBenchmark {get; private set;}
+        /// <summary> 道具例子 </summary>
         public Example.TbExampleItemData TbExampleItemData {get; private set;}
         /// <summary> 道具表 </summary>
         public Item.TbItemData TbItemData {get; private set;}
@@ -31,7 +34,9 @@ namespace Hotfix.Common.Data
             TbExampleBaseStruct = new Example.TbExampleBaseStruct(loader("example_tbexamplebasestruct"));
             //进阶例子
             TbExampleExtendStruct = new Example.TbExampleExtendStruct(loader("example_tbexampleextendstruct"));
-            //
+            //测试
+            TbBenchmark = new Example.TbBenchmark(loader("example_tbbenchmark"));
+            //道具例子
             TbExampleItemData = new Example.TbExampleItemData(loader("example_tbexampleitemdata"));
             //道具表
             TbItemData = new Item.TbItemData(loader("item_tbitemdata"));
@@ -44,7 +49,7 @@ namespace Hotfix.Common.Data
 
         private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader, System.IProgress<float> progress)
         {
-            int tablesNum = 6;
+            int tablesNum = 7;
             
             //例子
             var TbExampleBaseStruct_loader = await loader("example_tbexamplebasestruct");
@@ -56,25 +61,30 @@ namespace Hotfix.Common.Data
             TbExampleExtendStruct = new Example.TbExampleExtendStruct(TbExampleExtendStruct_loader);
             progress?.Report(2f / tablesNum);
 
-            //
+            //测试
+            var TbBenchmark_loader = await loader("example_tbbenchmark");
+            TbBenchmark = new Example.TbBenchmark(TbBenchmark_loader);
+            progress?.Report(3f / tablesNum);
+
+            //道具例子
             var TbExampleItemData_loader = await loader("example_tbexampleitemdata");
             TbExampleItemData = new Example.TbExampleItemData(TbExampleItemData_loader);
-            progress?.Report(3f / tablesNum);
+            progress?.Report(4f / tablesNum);
 
             //道具表
             var TbItemData_loader = await loader("item_tbitemdata");
             TbItemData = new Item.TbItemData(TbItemData_loader);
-            progress?.Report(4f / tablesNum);
+            progress?.Report(5f / tablesNum);
 
             //全局配置表
             var TbGlobalConfig_loader = await loader("config_tbglobalconfig");
             TbGlobalConfig = new Config.TbGlobalConfig(TbGlobalConfig_loader);
-            progress?.Report(5f / tablesNum);
+            progress?.Report(6f / tablesNum);
 
             //语言表
             var TbLanguage_loader = await loader("l10n_tblanguage");
             TbLanguage = new L10n.TbLanguage(TbLanguage_loader);
-            progress?.Report(6f / tablesNum);
+            progress?.Report(7f / tablesNum);
 
 
             ResolveRef();
@@ -84,6 +94,7 @@ namespace Hotfix.Common.Data
         {
             TbExampleBaseStruct.ResolveRef(this);
             TbExampleExtendStruct.ResolveRef(this);
+            TbBenchmark.ResolveRef(this);
             TbExampleItemData.ResolveRef(this);
             TbItemData.ResolveRef(this);
             TbGlobalConfig.ResolveRef(this);
@@ -96,7 +107,9 @@ namespace Hotfix.Common.Data
             TbExampleBaseStruct = null;
             //进阶例子
             TbExampleExtendStruct = null;
-            //
+            //测试
+            TbBenchmark = null;
+            //道具例子
             TbExampleItemData = null;
             //道具表
             TbItemData = null;

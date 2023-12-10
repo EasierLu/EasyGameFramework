@@ -12,41 +12,41 @@ using Luban;
 
 namespace Hotfix.Common.Data
 {
-public sealed partial class Language : Luban.BeanBase
-{
-    public Language(ByteBuf _buf) 
+    public sealed partial class Language : Luban.BeanBase
     {
-        ID = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Text = new System.Collections.Generic.Dictionary<L10n.LanguageType, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { L10n.LanguageType _k0;  _k0 = (L10n.LanguageType)_buf.ReadInt(); string _v0;  _v0 = _buf.ReadString();     Text.Add(_k0, _v0);}}
-    }
+        public Language(ByteBuf _buf) 
+        {
+            ID = _buf.ReadString();
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Text = new System.Collections.Generic.Dictionary<L10n.LanguageType, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { L10n.LanguageType _k0;  _k0 = (L10n.LanguageType)_buf.ReadInt(); string _v0;  _v0 = _buf.ReadString();     Text.Add(_k0, _v0);}}
+        }
 
-    public static Language DeserializeLanguage(ByteBuf _buf)
-    {
-        return new Language(_buf);
-    }
+        public static Language DeserializeLanguage(ByteBuf _buf)
+        {
+            return new Language(_buf);
+        }
 
-    /// <summary>
-    /// ID
-    /// </summary>
-    public readonly string ID;
-    public readonly System.Collections.Generic.Dictionary<L10n.LanguageType, string> Text;
-   
-    public const int __ID__ = -1548945544;
-    public override int GetTypeId() => __ID__;
+        /// <summary>
+        /// ID
+        /// </summary>
+        public readonly string ID;
+        public readonly System.Collections.Generic.Dictionary<L10n.LanguageType, string> Text;
+    
+        public const int __ID__ = -1548945544;
+        public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
-    {
-        
-        
-    }
+        public  void ResolveRef(Tables tables)
+        {
+            
+            
+        }
 
-    public override string ToString()
-    {
-        return "{ "
-        + "ID:" + ID + ","
-        + "text:" + Luban.StringUtil.CollectionToString(Text) + ","
-        + "}";
+        public override string ToString()
+        {
+            return "{ "
+            + "ID:" + ID + ","
+            + "text:" + Luban.StringUtil.CollectionToString(Text) + ","
+            + "}";
+        }
     }
-}
 
 }

@@ -12,37 +12,37 @@ using Luban;
 
 namespace Hotfix.Common.Data
 {
-public sealed partial class GlobalConfig : Luban.BeanBase
-{
-    public GlobalConfig(ByteBuf _buf) 
+    public sealed partial class GlobalConfig : Luban.BeanBase
     {
-        BagMax = _buf.ReadInt();
-    }
+        public GlobalConfig(ByteBuf _buf) 
+        {
+            BagMax = _buf.ReadInt();
+        }
 
-    public static GlobalConfig DeserializeGlobalConfig(ByteBuf _buf)
-    {
-        return new GlobalConfig(_buf);
-    }
+        public static GlobalConfig DeserializeGlobalConfig(ByteBuf _buf)
+        {
+            return new GlobalConfig(_buf);
+        }
 
-    /// <summary>
-    /// 背包上限
-    /// </summary>
-    public readonly int BagMax;
-   
-    public const int __ID__ = -958250779;
-    public override int GetTypeId() => __ID__;
+        /// <summary>
+        /// 背包上限
+        /// </summary>
+        public readonly int BagMax;
+    
+        public const int __ID__ = -958250779;
+        public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
-    {
-        
-    }
+        public  void ResolveRef(Tables tables)
+        {
+            
+        }
 
-    public override string ToString()
-    {
-        return "{ "
-        + "bagMax:" + BagMax + ","
-        + "}";
+        public override string ToString()
+        {
+            return "{ "
+            + "bagMax:" + BagMax + ","
+            + "}";
+        }
     }
-}
 
 }

@@ -27,7 +27,12 @@ namespace Hotfix.Common.Data
         /// <returns></returns>
         public async UniTask InitAsync(IProgress<float> progress = null)
         {
+            var startTime = DateTime.Now;
+
             await LoadAsync(AsyncLoader, progress);
+
+            float time = time = (float)(DateTime.Now - startTime).TotalMilliseconds;
+            Debug.Log($"配置加载完成...{time}ms");
         }
 
         /// <summary>

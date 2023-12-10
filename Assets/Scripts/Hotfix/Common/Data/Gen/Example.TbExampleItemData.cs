@@ -12,40 +12,44 @@ using Luban;
 
 namespace Hotfix.Common.Data.Example
 {
-public partial class TbExampleItemData
-{
-    private readonly System.Collections.Generic.Dictionary<int, ExampleItemData> _dataMap;
-    private readonly System.Collections.Generic.List<ExampleItemData> _dataList;
-    
-    public TbExampleItemData(ByteBuf _buf)
+    /// <summary>
+    /// 道具例子
+    /// </summary>
+    public partial class TbExampleItemData
     {
-        _dataMap = new System.Collections.Generic.Dictionary<int, ExampleItemData>();
-        _dataList = new System.Collections.Generic.List<ExampleItemData>();
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        private readonly System.Collections.Generic.Dictionary<int, ExampleItemData> _dataMap;
+        private readonly System.Collections.Generic.List<ExampleItemData> _dataList;
+        
+        public TbExampleItemData(ByteBuf _buf)
         {
-            ExampleItemData _v;
-            _v = ExampleItemData.DeserializeExampleItemData(_buf);
-            _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+            _dataMap = new System.Collections.Generic.Dictionary<int, ExampleItemData>(0x0004);
+            _dataList = new System.Collections.Generic.List<ExampleItemData>(0x0004);
+            
+            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            {
+                ExampleItemData _v;
+                _v = ExampleItemData.DeserializeExampleItemData(_buf);
+                _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
+            }
         }
-    }
 
-    public System.Collections.Generic.Dictionary<int, ExampleItemData> DataMap => _dataMap;
-    public System.Collections.Generic.List<ExampleItemData> DataList => _dataList;
+        public System.Collections.Generic.Dictionary<int, ExampleItemData> DataMap => _dataMap;
+        public System.Collections.Generic.List<ExampleItemData> DataList => _dataList;
 
-    public ExampleItemData GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public ExampleItemData Get(int key) => _dataMap[key];
-    public ExampleItemData this[int key] => _dataMap[key];
+        public ExampleItemData GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public ExampleItemData Get(int key) => _dataMap[key];
+        public ExampleItemData this[int key] => _dataMap[key];
 
-    public void ResolveRef(Tables tables)
-    {
-        foreach(var _v in _dataList)
+        public void ResolveRef(Tables tables)
         {
-            _v.ResolveRef(tables);
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef(tables);
+            }
         }
-    }
 
-}
+    }
 
 }

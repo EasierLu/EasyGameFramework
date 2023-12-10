@@ -12,105 +12,105 @@ using Luban;
 
 namespace Hotfix.Common.Data
 {
-public sealed partial class ExampleBaseStruct : Luban.BeanBase
-{
-    public ExampleBaseStruct(ByteBuf _buf) 
+    public sealed partial class ExampleBaseStruct : Luban.BeanBase
     {
-        Id = _buf.ReadInt();
-        X1 = _buf.ReadString();
-        X2 = _buf.ReadFloat();
-        X3 = _buf.ReadBool();
-        X4 = _buf.ReadLong();
-        X5 = _buf.ReadString();
-        X6 = ExternalTypeUtil.NewVector3(vector3.Deserializevector3(_buf));
-        X7 = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf));
-        X8 = _buf.ReadLong();
-        {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X9 = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); X9[__index0] = __e0;}}
-        {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X10 = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); X10[__index0] = __e0;}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X11 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); X11.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X12 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); X12.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X13 = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     X13.Add(_k0, _v0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X14 = new System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { int _k0;  _k0 = _buf.ReadInt(); System.Collections.Generic.List<int> _v0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_v0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _v0.Add(_e1);}}     X14.Add(_k0, _v0);}}
-    }
+        public ExampleBaseStruct(ByteBuf _buf) 
+        {
+            Id = _buf.ReadInt();
+            X1 = _buf.ReadString();
+            X2 = _buf.ReadFloat();
+            X3 = _buf.ReadBool();
+            X4 = _buf.ReadLong();
+            X5 = _buf.ReadString();
+            X6 = ExternalTypeUtil.NewVector3(vector3.Deserializevector3(_buf));
+            X7 = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf));
+            X8 = _buf.ReadLong();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X9 = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); X9[__index0] = __e0;}}
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X10 = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); X10[__index0] = __e0;}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X11 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); X11.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X12 = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); X12.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X13 = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     X13.Add(_k0, _v0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);X14 = new System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { int _k0;  _k0 = _buf.ReadInt(); System.Collections.Generic.List<int> _v0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_v0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _v0.Add(_e1);}}     X14.Add(_k0, _v0);}}
+        }
 
-    public static ExampleBaseStruct DeserializeExampleBaseStruct(ByteBuf _buf)
-    {
-        return new ExampleBaseStruct(_buf);
-    }
+        public static ExampleBaseStruct DeserializeExampleBaseStruct(ByteBuf _buf)
+        {
+            return new ExampleBaseStruct(_buf);
+        }
 
-    /// <summary>
-    /// 整数
-    /// </summary>
-    public readonly int Id;
-    /// <summary>
-    /// 字符串
-    /// </summary>
-    public readonly string X1;
-    /// <summary>
-    /// 浮点数
-    /// </summary>
-    public readonly float X2;
-    /// <summary>
-    /// 布尔值
-    /// </summary>
-    public readonly bool X3;
-    /// <summary>
-    /// 长整数
-    /// </summary>
-    public readonly long X4;
-    public readonly string X5;
-    public readonly UnityEngine.Vector3 X6;
-    public readonly UnityEngine.Vector2 X7;
-    public readonly long X8;
-    public readonly int[] X9;
-    public readonly int[] X10;
-    public readonly System.Collections.Generic.List<string> X11;
-    public readonly System.Collections.Generic.List<string> X12;
-    public readonly System.Collections.Generic.Dictionary<string, string> X13;
-    public readonly System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>> X14;
-   
-    public const int __ID__ = 1313754864;
-    public override int GetTypeId() => __ID__;
+        /// <summary>
+        /// 整数
+        /// </summary>
+        public readonly int Id;
+        /// <summary>
+        /// 字符串
+        /// </summary>
+        public readonly string X1;
+        /// <summary>
+        /// 浮点数
+        /// </summary>
+        public readonly float X2;
+        /// <summary>
+        /// 布尔值
+        /// </summary>
+        public readonly bool X3;
+        /// <summary>
+        /// 长整数
+        /// </summary>
+        public readonly long X4;
+        public readonly string X5;
+        public readonly UnityEngine.Vector3 X6;
+        public readonly UnityEngine.Vector2 X7;
+        public readonly long X8;
+        public readonly int[] X9;
+        public readonly int[] X10;
+        public readonly System.Collections.Generic.List<string> X11;
+        public readonly System.Collections.Generic.List<string> X12;
+        public readonly System.Collections.Generic.Dictionary<string, string> X13;
+        public readonly System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<int>> X14;
+    
+        public const int __ID__ = 1313754864;
+        public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
-    {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+        public  void ResolveRef(Tables tables)
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 
-    public override string ToString()
-    {
-        return "{ "
-        + "id:" + Id + ","
-        + "x1:" + X1 + ","
-        + "x2:" + X2 + ","
-        + "x3:" + X3 + ","
-        + "x4:" + X4 + ","
-        + "x5:" + X5 + ","
-        + "x6:" + X6 + ","
-        + "x7:" + X7 + ","
-        + "x8:" + X8 + ","
-        + "x9:" + Luban.StringUtil.CollectionToString(X9) + ","
-        + "x10:" + Luban.StringUtil.CollectionToString(X10) + ","
-        + "x11:" + Luban.StringUtil.CollectionToString(X11) + ","
-        + "x12:" + Luban.StringUtil.CollectionToString(X12) + ","
-        + "x13:" + Luban.StringUtil.CollectionToString(X13) + ","
-        + "x14:" + Luban.StringUtil.CollectionToString(X14) + ","
-        + "}";
+        public override string ToString()
+        {
+            return "{ "
+            + "id:" + Id + ","
+            + "x1:" + X1 + ","
+            + "x2:" + X2 + ","
+            + "x3:" + X3 + ","
+            + "x4:" + X4 + ","
+            + "x5:" + X5 + ","
+            + "x6:" + X6 + ","
+            + "x7:" + X7 + ","
+            + "x8:" + X8 + ","
+            + "x9:" + Luban.StringUtil.CollectionToString(X9) + ","
+            + "x10:" + Luban.StringUtil.CollectionToString(X10) + ","
+            + "x11:" + Luban.StringUtil.CollectionToString(X11) + ","
+            + "x12:" + Luban.StringUtil.CollectionToString(X12) + ","
+            + "x13:" + Luban.StringUtil.CollectionToString(X13) + ","
+            + "x14:" + Luban.StringUtil.CollectionToString(X14) + ","
+            + "}";
+        }
     }
-}
 
 }

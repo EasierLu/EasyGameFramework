@@ -12,44 +12,44 @@ using Luban;
 
 namespace Hotfix.Common.Data.Item
 {
-public sealed partial class ItemExchange : Luban.BeanBase
-{
-    public ItemExchange(ByteBuf _buf) 
+    public sealed partial class ItemExchange : Luban.BeanBase
     {
-        Id = _buf.ReadInt();
-        Num = _buf.ReadInt();
-    }
+        public ItemExchange(ByteBuf _buf) 
+        {
+            Id = _buf.ReadInt();
+            Num = _buf.ReadInt();
+        }
 
-    public static ItemExchange DeserializeItemExchange(ByteBuf _buf)
-    {
-        return new Item.ItemExchange(_buf);
-    }
+        public static ItemExchange DeserializeItemExchange(ByteBuf _buf)
+        {
+            return new Item.ItemExchange(_buf);
+        }
 
-    /// <summary>
-    /// id
-    /// </summary>
-    public readonly int Id;
-    /// <summary>
-    /// 数量
-    /// </summary>
-    public readonly int Num;
-   
-    public const int __ID__ = 1458423121;
-    public override int GetTypeId() => __ID__;
+        /// <summary>
+        /// id
+        /// </summary>
+        public readonly int Id;
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public readonly int Num;
+    
+        public const int __ID__ = 1458423121;
+        public override int GetTypeId() => __ID__;
 
-    public  void ResolveRef(Tables tables)
-    {
-        
-        
-    }
+        public  void ResolveRef(Tables tables)
+        {
+            
+            
+        }
 
-    public override string ToString()
-    {
-        return "{ "
-        + "id:" + Id + ","
-        + "num:" + Num + ","
-        + "}";
+        public override string ToString()
+        {
+            return "{ "
+            + "id:" + Id + ","
+            + "num:" + Num + ","
+            + "}";
+        }
     }
-}
 
 }

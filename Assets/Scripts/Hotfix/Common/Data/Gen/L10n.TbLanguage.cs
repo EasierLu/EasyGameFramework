@@ -12,43 +12,44 @@ using Luban;
 
 namespace Hotfix.Common.Data.L10n
 {
-/// <summary>
-/// 语言表
-/// </summary>
-public partial class TbLanguage
-{
-    private readonly System.Collections.Generic.Dictionary<string, Language> _dataMap;
-    private readonly System.Collections.Generic.List<Language> _dataList;
-    
-    public TbLanguage(ByteBuf _buf)
+    /// <summary>
+    /// 语言表
+    /// </summary>
+    public partial class TbLanguage
     {
-        _dataMap = new System.Collections.Generic.Dictionary<string, Language>();
-        _dataList = new System.Collections.Generic.List<Language>();
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        private readonly System.Collections.Generic.Dictionary<string, Language> _dataMap;
+        private readonly System.Collections.Generic.List<Language> _dataList;
+        
+        public TbLanguage(ByteBuf _buf)
         {
-            Language _v;
-            _v = Language.DeserializeLanguage(_buf);
-            _dataList.Add(_v);
-            _dataMap.Add(_v.ID, _v);
+            _dataMap = new System.Collections.Generic.Dictionary<string, Language>(0x0004);
+            _dataList = new System.Collections.Generic.List<Language>(0x0004);
+            
+            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            {
+                Language _v;
+                _v = Language.DeserializeLanguage(_buf);
+                _dataList.Add(_v);
+                _dataMap.Add(_v.ID, _v);
+            }
         }
-    }
 
-    public System.Collections.Generic.Dictionary<string, Language> DataMap => _dataMap;
-    public System.Collections.Generic.List<Language> DataList => _dataList;
+        public System.Collections.Generic.Dictionary<string, Language> DataMap => _dataMap;
+        public System.Collections.Generic.List<Language> DataList => _dataList;
 
-    public Language GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Language Get(string key) => _dataMap[key];
-    public Language this[string key] => _dataMap[key];
+        public Language GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public Language Get(string key) => _dataMap[key];
+        public Language this[string key] => _dataMap[key];
 
-    public void ResolveRef(Tables tables)
-    {
-        foreach(var _v in _dataList)
+        public void ResolveRef(Tables tables)
         {
-            _v.ResolveRef(tables);
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef(tables);
+            }
         }
-    }
 
-}
+    }
 
 }

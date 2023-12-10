@@ -12,45 +12,45 @@ using Luban;
 
 namespace Hotfix.Common.Data.Example
 {
-/// <summary>
-/// 例子用结构，有逗号分隔符
-/// </summary>
-public partial struct Bean_Sep
-{
-    public Bean_Sep(ByteBuf _buf) 
-    {
-        Id = _buf.ReadInt();
-        Num = _buf.ReadInt();
-    }
-
-    public static Bean_Sep DeserializeBean_Sep(ByteBuf _buf)
-    {
-        return new Example.Bean_Sep(_buf);
-    }
-
     /// <summary>
-    /// id
+    /// 例子用结构，有逗号分隔符
     /// </summary>
-    public readonly int Id;
-    /// <summary>
-    /// 数量
-    /// </summary>
-    public readonly int Num;
-   
-
-    public  void ResolveRef(Tables tables)
+    public partial struct Bean_Sep
     {
-        
-        
-    }
+        public Bean_Sep(ByteBuf _buf) 
+        {
+            Id = _buf.ReadInt();
+            Num = _buf.ReadInt();
+        }
 
-    public override string ToString()
-    {
-        return "{ "
-        + "id:" + Id + ","
-        + "num:" + Num + ","
-        + "}";
+        public static Bean_Sep DeserializeBean_Sep(ByteBuf _buf)
+        {
+            return new Example.Bean_Sep(_buf);
+        }
+
+        /// <summary>
+        /// id
+        /// </summary>
+        public readonly int Id;
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public readonly int Num;
+    
+
+        public  void ResolveRef(Tables tables)
+        {
+            
+            
+        }
+
+        public override string ToString()
+        {
+            return "{ "
+            + "id:" + Id + ","
+            + "num:" + Num + ","
+            + "}";
+        }
     }
-}
 
 }

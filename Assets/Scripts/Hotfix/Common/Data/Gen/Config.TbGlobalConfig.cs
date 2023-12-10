@@ -12,31 +12,32 @@ using Luban;
 
 namespace Hotfix.Common.Data.Config
 {
-/// <summary>
-/// 全局配置表
-/// </summary>
-public partial class TbGlobalConfig
-{
-
-     private readonly GlobalConfig _data;
-
-    public TbGlobalConfig(ByteBuf _buf)
-    {
-        int n = _buf.ReadSize();
-        if (n != 1) throw new SerializationException("table mode=one, but size != 1");
-        _data = GlobalConfig.DeserializeGlobalConfig(_buf);
-    }
-
-
     /// <summary>
-    /// 背包上限
+    /// 全局配置表
     /// </summary>
-     public int BagMax => _data.BagMax;
-    
-    public void ResolveRef(Tables tables)
+    public partial class TbGlobalConfig
     {
-        _data.ResolveRef(tables);
+        
+
+        private readonly GlobalConfig _data;
+
+        public TbGlobalConfig(ByteBuf _buf)
+        {
+            int n = _buf.ReadSize();
+            if (n != 1) throw new SerializationException("table mode=one, but size != 1");
+            _data = GlobalConfig.DeserializeGlobalConfig(_buf);
+        }
+
+
+        /// <summary>
+        /// 背包上限
+        /// </summary>
+        public int BagMax => _data.BagMax;
+        
+        public void ResolveRef(Tables tables)
+        {
+            _data.ResolveRef(tables);
+        }
     }
-}
 
 }

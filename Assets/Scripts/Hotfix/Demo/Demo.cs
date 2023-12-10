@@ -18,6 +18,7 @@ public class Demo : MonoBehaviour
     private async UniTaskVoid Initialize()
     {
         await InitAsset();
+        await UniTask.Delay(2000);
         await InitTable();
     }
 
@@ -35,6 +36,11 @@ public class Demo : MonoBehaviour
         Config = new Tables();
         Config.AssetManager = AssetManager;
         await Config.InitAsync();
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    await Config.ReloadAsync();
+        //    await UniTask.Delay(500);
+        //}
 
         Debug.Log(Config.TbGlobalConfig.BagMax);
     }

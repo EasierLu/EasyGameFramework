@@ -293,7 +293,7 @@ namespace Luban.Editor
             catch(Exception e)
             {
                 Debug.LogException(e);
-                EditorUtility.DisplayDialog("错误", "请检查日志", "确定");
+                EditorUtility.DisplayDialog("错误", "可能存在错误,请检查日志", "确定");
             }
             finally
             {

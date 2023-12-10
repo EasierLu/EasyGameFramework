@@ -12,43 +12,44 @@ using Luban;
 
 namespace Hotfix.Common.Data.Example
 {
-/// <summary>
-/// 例子
-/// </summary>
-public partial class TbExampleBaseStruct
-{
-    private readonly System.Collections.Generic.Dictionary<int, ExampleBaseStruct> _dataMap;
-    private readonly System.Collections.Generic.List<ExampleBaseStruct> _dataList;
-    
-    public TbExampleBaseStruct(ByteBuf _buf)
+    /// <summary>
+    /// 例子
+    /// </summary>
+    public partial class TbExampleBaseStruct
     {
-        _dataMap = new System.Collections.Generic.Dictionary<int, ExampleBaseStruct>();
-        _dataList = new System.Collections.Generic.List<ExampleBaseStruct>();
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        private readonly System.Collections.Generic.Dictionary<int, ExampleBaseStruct> _dataMap;
+        private readonly System.Collections.Generic.List<ExampleBaseStruct> _dataList;
+        
+        public TbExampleBaseStruct(ByteBuf _buf)
         {
-            ExampleBaseStruct _v;
-            _v = ExampleBaseStruct.DeserializeExampleBaseStruct(_buf);
-            _dataList.Add(_v);
-            _dataMap.Add(_v.Id, _v);
+            _dataMap = new System.Collections.Generic.Dictionary<int, ExampleBaseStruct>(0x0004);
+            _dataList = new System.Collections.Generic.List<ExampleBaseStruct>(0x0004);
+            
+            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            {
+                ExampleBaseStruct _v;
+                _v = ExampleBaseStruct.DeserializeExampleBaseStruct(_buf);
+                _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
+            }
         }
-    }
 
-    public System.Collections.Generic.Dictionary<int, ExampleBaseStruct> DataMap => _dataMap;
-    public System.Collections.Generic.List<ExampleBaseStruct> DataList => _dataList;
+        public System.Collections.Generic.Dictionary<int, ExampleBaseStruct> DataMap => _dataMap;
+        public System.Collections.Generic.List<ExampleBaseStruct> DataList => _dataList;
 
-    public ExampleBaseStruct GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public ExampleBaseStruct Get(int key) => _dataMap[key];
-    public ExampleBaseStruct this[int key] => _dataMap[key];
+        public ExampleBaseStruct GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public ExampleBaseStruct Get(int key) => _dataMap[key];
+        public ExampleBaseStruct this[int key] => _dataMap[key];
 
-    public void ResolveRef(Tables tables)
-    {
-        foreach(var _v in _dataList)
+        public void ResolveRef(Tables tables)
         {
-            _v.ResolveRef(tables);
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef(tables);
+            }
         }
-    }
 
-}
+    }
 
 }
