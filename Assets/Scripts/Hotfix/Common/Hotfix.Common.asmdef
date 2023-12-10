@@ -1,0 +1,16 @@
+{
+    "name": "Hotfix.Common",
+    "rootNamespace": "Hotfix.Common",
+    "references": [
+        "GUID:8217794baac49994d8ab6635f8e85f3e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

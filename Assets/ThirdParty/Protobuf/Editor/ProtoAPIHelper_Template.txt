@@ -1,0 +1,59 @@
+
+using Google.Protobuf;
+using System;
+using System.Collections.Generic;
+
+namespace Protocol
+{
+    public class ProtoAPIHelper
+    {
+        private static Dictionary<ServiceApi, ProtoApiDataType> m_ProtoDataType = new Dictionary<ServiceApi, ProtoApiDataType>()
+        {
+$$DATA_TYPES$$
+        };
+
+        private static readonly Dictionary<RuntimeTypeHandle, MessageParser> Parsers = new Dictionary<RuntimeTypeHandle, MessageParser>()
+        {
+$$DATA_PARSERS$$
+        };
+
+        public static MessageParser GetMessageParser(RuntimeTypeHandle typeHandle)
+        {
+            MessageParser messageParser;
+            Parsers.TryGetValue(typeHandle, out messageParser);
+            return messageParser;
+        }
+
+        public static Type GetRequestDataType(ServiceApi api)
+        {
+            if (!m_ProtoDataType.ContainsKey(api))
+            {
+                return null;
+            }
+
+            return m_ProtoDataType[api].sendType;
+        }
+
+        public static Type GetResponseDataType(ServiceApi api)
+        {
+            if (!m_ProtoDataType.ContainsKey(api))
+            {
+                return null;
+            }
+
+            return m_ProtoDataType[api].receiveType;
+        }
+
+        struct ProtoApiDataType
+        {
+            public Type sendType;
+            public Type receiveType;
+
+            public ProtoApiDataType(Type sendType, Type receiveType)
+            {
+                this.sendType = sendType;
+                this.receiveType = receiveType;
+            }
+        }
+    }
+}

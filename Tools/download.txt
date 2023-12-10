@@ -1,0 +1,1 @@
+dotnet sdk 7.0:	https://dotnet.microsoft.com/zh-cn/download/dotnet/7.0

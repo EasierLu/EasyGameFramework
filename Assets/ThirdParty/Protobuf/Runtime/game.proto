@@ -1,0 +1,29 @@
+enum Service
+{
+	LOGIN = 0;
+}
+
+message Request
+{
+	optional Service service = 1;
+	optional bytes data = 2;
+}
+
+message Response
+{
+	optional Service service = 1;
+	optional int32 code = 2;
+	optional string message;
+	optional bytes data = 4;
+}
+
+message LoginRequest
+{
+	optional string account = 1;
+	optional string password = 2;
+}
+
+message LoginResponse
+{
+	optional int playerId;
+}
