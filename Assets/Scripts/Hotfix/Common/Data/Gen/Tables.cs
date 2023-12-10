@@ -11,50 +11,88 @@ using Luban;
 
 namespace Hotfix.Common.Data
 {
-public partial class Tables
-{
-    /// <summary>
-    /// 例子
-    /// </summary>
-    public Example.TbExampleBaseStruct TbExampleBaseStruct {get; }
-    /// <summary>
-    /// 进阶例子
-    /// </summary>
-    public Example.TbExampleExtendStruct TbExampleExtendStruct {get; }
-    public Example.TbExampleItemData TbExampleItemData {get; }
-    /// <summary>
-    /// 道具表
-    /// </summary>
-    public Item.TbItemData TbItemData {get; }
-    /// <summary>
-    /// 全局配置表
-    /// </summary>
-    public Config.TbGlobalConfig TbGlobalConfig {get; }
-    /// <summary>
-    /// 语言表
-    /// </summary>
-    public L10n.TbLanguage TbLanguage {get; }
+    public partial class Tables
+    {
+        /// <summary> 例子 </summary>
+        public Example.TbExampleBaseStruct TbExampleBaseStruct {get; private set;}
+        /// <summary> 进阶例子 </summary>
+        public Example.TbExampleExtendStruct TbExampleExtendStruct {get; private set;}
+        public Example.TbExampleItemData TbExampleItemData {get; private set;}
+        /// <summary> 道具表 </summary>
+        public Item.TbItemData TbItemData {get; private set;}
+        /// <summary> 全局配置表 </summary>
+        public Config.TbGlobalConfig TbGlobalConfig {get; private set;}
+        /// <summary> 语言表 </summary>
+        public L10n.TbLanguage TbLanguage {get; private set;}
 
-    public Tables(System.Func<string, ByteBuf> loader)
-    {
-        TbExampleBaseStruct = new Example.TbExampleBaseStruct(loader("example"));
-        TbExampleExtendStruct = new Example.TbExampleExtendStruct(loader("example"));
-        TbExampleItemData = new Example.TbExampleItemData(loader("example"));
-        TbItemData = new Item.TbItemData(loader("item_tbitemdata"));
-        TbGlobalConfig = new Config.TbGlobalConfig(loader("config_tbglobalconfig"));
-        TbLanguage = new L10n.TbLanguage(loader("l10n_tblanguage"));
-        ResolveRef();
+        public Tables()
+        {
+        }
+
+        public Tables(System.Func<string, ByteBuf> loader)
+        {
+            //例子
+            TbExampleBaseStruct = new Example.TbExampleBaseStruct(loader("example"));
+            //进阶例子
+            TbExampleExtendStruct = new Example.TbExampleExtendStruct(loader("example"));
+            //
+            TbExampleItemData = new Example.TbExampleItemData(loader("example"));
+            //道具表
+            TbItemData = new Item.TbItemData(loader("item_tbitemdata"));
+            //全局配置表
+            TbGlobalConfig = new Config.TbGlobalConfig(loader("config_tbglobalconfig"));
+            //语言表
+            TbLanguage = new L10n.TbLanguage(loader("l10n_tblanguage"));
+            ResolveRef();
+        }
+
+        private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader, System.IProgress<float> progress)
+        {
+            int tablesNum = 6;
+            
+            //例子
+            var TbExampleBaseStruct_loader = await loader("example");
+            TbExampleBaseStruct = new Example.TbExampleBaseStruct(TbExampleBaseStruct_loader);
+            progress?.Report(1f / tablesNum);
+
+            //进阶例子
+            var TbExampleExtendStruct_loader = await loader("example");
+            TbExampleExtendStruct = new Example.TbExampleExtendStruct(TbExampleExtendStruct_loader);
+            progress?.Report(2f / tablesNum);
+
+            //
+            var TbExampleItemData_loader = await loader("example");
+            TbExampleItemData = new Example.TbExampleItemData(TbExampleItemData_loader);
+            progress?.Report(3f / tablesNum);
+
+            //道具表
+            var TbItemData_loader = await loader("item_tbitemdata");
+            TbItemData = new Item.TbItemData(TbItemData_loader);
+            progress?.Report(4f / tablesNum);
+
+            //全局配置表
+            var TbGlobalConfig_loader = await loader("config_tbglobalconfig");
+            TbGlobalConfig = new Config.TbGlobalConfig(TbGlobalConfig_loader);
+            progress?.Report(5f / tablesNum);
+
+            //语言表
+            var TbLanguage_loader = await loader("l10n_tblanguage");
+            TbLanguage = new L10n.TbLanguage(TbLanguage_loader);
+            progress?.Report(6f / tablesNum);
+
+
+            ResolveRef();
+        }
+        
+        private void ResolveRef()
+        {
+            TbExampleBaseStruct.ResolveRef(this);
+            TbExampleExtendStruct.ResolveRef(this);
+            TbExampleItemData.ResolveRef(this);
+            TbItemData.ResolveRef(this);
+            TbGlobalConfig.ResolveRef(this);
+            TbLanguage.ResolveRef(this);
+        }
     }
-    
-    private void ResolveRef()
-    {
-        TbExampleBaseStruct.ResolveRef(this);
-        TbExampleExtendStruct.ResolveRef(this);
-        TbExampleItemData.ResolveRef(this);
-        TbItemData.ResolveRef(this);
-        TbGlobalConfig.ResolveRef(this);
-        TbLanguage.ResolveRef(this);
-    }
-}
 
 }

@@ -301,6 +301,7 @@ namespace Luban.Editor
                 {
                     File.Delete(BAT_FILE);
                 }
+                AssetDatabase.Refresh();
             }
         }
     }
