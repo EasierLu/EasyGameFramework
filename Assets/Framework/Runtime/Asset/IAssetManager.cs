@@ -17,7 +17,7 @@ namespace EGFramework.Runtime
 
         T LoadAsset<T>(string path) where T : UnityEngine.Object;
 
-        UniTask<T> LoadAssetSync<T>(string path)where T : UnityEngine.Object;
+        UniTask<T> LoadAssetAsync<T>(string path)where T : UnityEngine.Object;
 
         UnityEngine.Object[] LoadAllAasset(string path);
 

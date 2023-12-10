@@ -11,11 +11,13 @@ namespace EGFramework.Runtime
     {
         public string readOnlyPath { get; set; }
         public string readWritePath { get; set; }
-        public string version { get;}
+        public string version => m_Package.GetPackageVersion();
         public AssetMode assetMode { get; set; }
         public string updataUrl { get; set; }
 
-        public async UniTaskVoid Initialize()
+        private ResourcePackage m_Package;
+
+        public async UniTask Initialize()
         {
             await InitializeYooAsset();
         }
@@ -29,11 +31,11 @@ namespace EGFramework.Runtime
             }
 #endif
             YooAssets.Initialize();
-            var package = YooAssets.CreatePackage("DefaultPackage");
-            YooAssets.SetDefaultPackage(package);
+            m_Package = YooAssets.CreatePackage("DefaultPackage");
+            YooAssets.SetDefaultPackage(m_Package);
 
             var initParameters = GetYooAssetInitializeParameters();
-            var initOperation = package.InitializeAsync(initParameters);
+            var initOperation = m_Package.InitializeAsync(initParameters);
             await initOperation;
 
             if (initOperation.Status == EOperationStatus.Succeed)
@@ -91,9 +93,11 @@ namespace EGFramework.Runtime
             throw new System.NotImplementedException();
         }
 
-        public UniTask<T> LoadAssetSync<T>(string path) where T : Object
+        public async UniTask<T> LoadAssetAsync<T>(string path) where T : Object
         {
-            throw new System.NotImplementedException();
+            var assetHandle = m_Package.LoadAssetAsync(path);
+            await assetHandle;
+            return assetHandle.AssetObject as T;
         }
 
         public byte[] LoadRawFile(string path)
