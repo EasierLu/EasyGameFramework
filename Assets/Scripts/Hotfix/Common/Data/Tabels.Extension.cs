@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using EGFramework.Runtime;
+using EGFramework.Runtime.Util;
 using Luban;
 using System;
 using System.Collections;
@@ -32,7 +33,7 @@ namespace Hotfix.Common.Data
             await LoadAsync(AsyncLoader, progress);
 
             float time = time = (float)(DateTime.Now - startTime).TotalMilliseconds;
-            Debug.Log($"配置加载完成...{time}ms");
+            Log.InfoFormat("配置加载完成...{0}ms", time);
         }
 
         /// <summary>

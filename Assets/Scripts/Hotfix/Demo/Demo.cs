@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using EGFramework.Runtime;
+using EGFramework.Runtime.Util;
 using Hotfix.Common.Data;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,6 @@ public class Demo : MonoBehaviour
         //    await UniTask.Delay(500);
         //}
 
-        Debug.Log(Config.TbGlobalConfig.BagMax);
+        Log.Info(Config.TbGlobalConfig.BagMax);
     }
 }

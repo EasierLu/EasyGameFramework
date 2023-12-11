@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using EGFramework.Runtime.Util;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,11 +43,11 @@ namespace EGFramework.Runtime
 
             if (initOperation.Status == EOperationStatus.Succeed)
             {
-                Debug.Log("资源包初始化成功！");
+                Log.Info("资源包初始化成功！");
             }
             else
             {
-                Debug.LogError($"资源包初始化失败：{initOperation.Error}");
+                Log.FatalFormat("资源包初始化失败：{0}", initOperation.Error);
             }
         }
 
@@ -57,7 +58,6 @@ namespace EGFramework.Runtime
 #if UNITY_EDITOR
                 var initParameters = new EditorSimulateModeParameters();
                 initParameters.SimulateManifestFilePath = EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.ScriptableBuildPipeline, "DefaultPackage");
-                Debug.Log(initParameters.SimulateManifestFilePath);
                 return initParameters;
 #else   
                 return null;

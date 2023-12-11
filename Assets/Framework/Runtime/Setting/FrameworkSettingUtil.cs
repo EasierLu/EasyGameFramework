@@ -1,4 +1,6 @@
+using EGFramework.Runtime.Base;
 using EGFramework.Runtime.Setting;
+using EGFramework.Runtime.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,16 +34,15 @@ namespace EGFramework.Runtime
             {
                 foreach (var assetPath in globalAssetPaths)
                 {
-                    Debug.LogError($"不能有多个 {assetType}. 路径: {UnityEditor.AssetDatabase.GUIDToAssetPath(assetPath)}");
+                    Log.ErrorFormat("不能有多个 {0}. 路径: {1}", assetType, UnityEditor.AssetDatabase.GUIDToAssetPath(assetPath));
                 }
-                throw new Exception($"不能有多个 {assetType}");
+                throw new FrameworkException($"不能有多个 {assetType}");
             }
 #endif
             T customGlobalSettings = Resources.Load<T>(assetsPath);
             if (customGlobalSettings == null)
             {
-                //TODO Logger
-                Debug.LogError($"没找到 {assetType} asset，自动创建创建一个:{assetsPath}.");
+                Log.ErrorFormat("没找到 {0} asset，自动创建创建一个:{1}.", assetType, assetsPath);
                 return null;
             }
 
