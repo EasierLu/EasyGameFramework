@@ -52,7 +52,7 @@ namespace YooAsset.Editor
 				buildParameters.BuildinFileCopyParams = string.Empty;
 
 				ScriptableBuildPipeline pipeline = new ScriptableBuildPipeline();
-				var buildResult = pipeline.Run(buildParameters, true);
+				var buildResult = pipeline.Run(buildParameters, false);
 				if (buildResult.Success)
 				{
 					string manifestFileName = YooAssetSettingsData.GetManifestBinaryFileName(buildParameters.PackageName, buildParameters.PackageVersion);
