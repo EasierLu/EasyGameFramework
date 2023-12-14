@@ -16,6 +16,8 @@ namespace EGFramework.Runtime.Event
         private List<Func<T, CancellationToken, UniTask>> m_AsyncEvents = new List<Func<T, CancellationToken, UniTask>>();
         private Action<T> m_SyncEvent;
 
+        public int Count => m_AsyncEvents.Count + m_SyncEvent.GetInvocationList().Length;
+
         public void Add(Action<T> handle)
         {
             m_SyncEvent += handle;
@@ -108,6 +110,8 @@ namespace EGFramework.Runtime.Event
 
         private List<Func<CancellationToken, UniTask>> m_AsyncEvents = new List<Func<CancellationToken, UniTask>>();
         private Action m_SyncEvent;
+
+        public int Count => m_AsyncEvents.Count + m_SyncEvent.GetInvocationList().Length;
 
         public void Add(Action handle)
         {

@@ -11,15 +11,15 @@ namespace EGFramework.Runtime.Event
     {
         public int MaxDelegateNum => m_ArrayPool.Length;
 
-        private Dictionary<string, IEventHandler> m_EventDelegates;
+        private Dictionary<string, IEventHandler> m_EventHandlers;
         private CappedArrayPool<UniTask> m_ArrayPool;
         private HashSet<string> m_PermanentEvents;
 
-        public EventController(int maxDelegateNum = 8)
+        public EventController(int maxAsyncDelegateNum = 8)
         {
-            m_EventDelegates = new Dictionary<string, IEventHandler>();
+            m_EventHandlers = new Dictionary<string, IEventHandler>();
             m_ArrayPool = ReferencePool.Acquire<CappedArrayPool<UniTask>>();
-            m_ArrayPool.Init(maxDelegateNum);
+            m_ArrayPool.Init(maxAsyncDelegateNum);
             m_PermanentEvents = new HashSet<string>();
         }
 
@@ -45,7 +45,7 @@ namespace EGFramework.Runtime.Event
 
         public bool ContainsEvent(string eventKey)
         {
-            return m_EventDelegates.ContainsKey(eventKey);
+            return m_EventHandlers.ContainsKey(eventKey);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace EGFramework.Runtime.Event
         {
             List<string> eventToRemove = new List<string>();
 
-            foreach (var pair in m_EventDelegates)
+            foreach (var pair in m_EventHandlers)
             {
                 if (!m_PermanentEvents.Contains(pair.Key))
                 {
@@ -65,67 +65,67 @@ namespace EGFramework.Runtime.Event
 
             foreach (string eventKey in eventToRemove)
             {
-                m_EventDelegates.Remove(eventKey);
+                m_EventHandlers.Remove(eventKey);
             }
         }
 
         private T GetEventHandler<T>(string eventKey) where T : class, IEventHandler, new()
         {
-            T collection;
-            if (!m_EventDelegates.ContainsKey(eventKey))
+            T eventHandler;
+            if (!m_EventHandlers.ContainsKey(eventKey))
             {
-                collection = ReferencePool.Acquire<T>();
-                collection.EventKey = eventKey;
-                collection.ArrayPool = m_ArrayPool;
-                m_EventDelegates.Add(eventKey, collection);
+                eventHandler = ReferencePool.Acquire<T>();
+                eventHandler.EventKey = eventKey;
+                eventHandler.ArrayPool = m_ArrayPool;
+                m_EventHandlers.Add(eventKey, eventHandler);
             }
             else
             {
-                collection = m_EventDelegates[eventKey] as T;
+                eventHandler = m_EventHandlers[eventKey] as T;
             }
 
-            if (collection == null)
+            if (eventHandler == null)
             {
                 Log.ErrorFormat("Key:{0}. Event handler error: types of parameters are not match.", eventKey);
             }
 
-            return collection;
+            return eventHandler;
         }
 
         #region 增加事件
         public void AddEventListener(string eventKey, Action handle)
         {
-            EventHandler collection = GetEventHandler<EventHandler>(eventKey);
-            if (collection != null)
+            EventHandler eventHandler = GetEventHandler<EventHandler>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Add(handle);
+                eventHandler.Add(handle);
             }
         }
 
         public void AddEventListener(string eventKey, Func<CancellationToken, UniTask> handle)
         {
-            EventHandler collection = GetEventHandler<EventHandler>(eventKey);
-            if (collection != null)
+            EventHandler eventHandler = GetEventHandler<EventHandler>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Add(handle);
+                eventHandler.Add(handle);
             }
         }
 
         public void AddEventListener<T>(string eventKey, Action<T> handle)
         {
-            EventHandler<T> collection = GetEventHandler<EventHandler<T>>(eventKey);
-            if (collection != null)
+            EventHandler<T> eventHandler = GetEventHandler<EventHandler<T>>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Add(handle);
+                eventHandler.Add(handle);
             }
         }
 
         public void AddEventListener<T>(string eventKey, Func<T, CancellationToken, UniTask> handle)
         {
-            EventHandler<T> collection = GetEventHandler<EventHandler<T>>(eventKey);
-            if (collection != null)
+            EventHandler<T> eventHandler = GetEventHandler<EventHandler<T>>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Add(handle);
+                eventHandler.Add(handle);
             }
         }
 
@@ -135,37 +135,57 @@ namespace EGFramework.Runtime.Event
 
         public void RemoveEventListener(string eventKey, Action handle)
         {
-            EventHandler collection = GetEventHandler<EventHandler>(eventKey);
-            if (collection != null)
+            EventHandler eventHandler = GetEventHandler<EventHandler>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Remove(handle);
+                eventHandler.Remove(handle);
+                if (eventHandler.Count == 0)
+                {
+                    m_EventHandlers.Remove(eventKey);
+                    ReferencePool.Release(eventHandler);
+                }
             }
         }
 
         public void RemoveEventListener(string eventKey, Func<CancellationToken, UniTask> handle)
         {
-            EventHandler collection = GetEventHandler<EventHandler>(eventKey);
-            if (collection != null)
+            EventHandler eventHandler = GetEventHandler<EventHandler>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Remove(handle);
+                eventHandler.Remove(handle);
+                if (eventHandler.Count == 0)
+                {
+                    m_EventHandlers.Remove(eventKey);
+                    ReferencePool.Release(eventHandler);
+                }
             }
         }
 
         public void RemoveEventListener<T>(string eventKey, Action<T> handle)
         {
-            EventHandler<T> collection = GetEventHandler<EventHandler<T>>(eventKey);
-            if (collection != null)
+            EventHandler<T> eventHandler = GetEventHandler<EventHandler<T>>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Remove(handle);
+                eventHandler.Remove(handle);
+                if (eventHandler.Count == 0)
+                {
+                    m_EventHandlers.Remove(eventKey);
+                    ReferencePool.Release(eventHandler);
+                }
             }
         }
 
         public void RemoveEventListener<T>(string eventKey, Func<T, CancellationToken, UniTask> handle)
         {
-            EventHandler<T> collection = GetEventHandler<EventHandler<T>>(eventKey);
-            if (collection != null)
+            EventHandler<T> eventHandler = GetEventHandler<EventHandler<T>>(eventKey);
+            if (eventHandler != null)
             {
-                collection.Remove(handle);
+                eventHandler.Remove(handle);
+                if (eventHandler.Count == 0)
+                {
+                    m_EventHandlers.Remove(eventKey);
+                    ReferencePool.Release(eventHandler);
+                }
             }
         }
         #endregion
@@ -178,10 +198,10 @@ namespace EGFramework.Runtime.Event
 
         public async UniTask AsyncTriggerEvent(string eventKey, CancellationToken ct = default)
         {
-            EventHandler collection = GetEventHandler<EventHandler>(eventKey);
-            if (collection != null)
+            EventHandler eventHandler = GetEventHandler<EventHandler>(eventKey);
+            if (eventHandler != null)
             {
-                await collection.AsyncTrigger(ct);
+                await eventHandler.AsyncTrigger(ct);
             }
         }
 
@@ -192,21 +212,21 @@ namespace EGFramework.Runtime.Event
 
         public async UniTask AsyncTriggerEvent<T>(string eventKey, T arg1, CancellationToken ct = default)
         {
-            EventHandler<T> collection = GetEventHandler<EventHandler<T>>(eventKey);
-            if (collection != null)
+            EventHandler<T> eventHandler = GetEventHandler<EventHandler<T>>(eventKey);
+            if (eventHandler != null)
             {
-                await collection.AsyncTrigger(arg1, ct);
+                await eventHandler.AsyncTrigger(arg1, ct);
             }
         }
         #endregion
 
         public void Clear()
         {
-            foreach (var collection in m_EventDelegates.Values)
+            foreach (var eventHandler in m_EventHandlers.Values)
             {
-                ReferencePool.Release(collection);
+                ReferencePool.Release(eventHandler);
             }
-            m_EventDelegates.Clear();
+            m_EventHandlers.Clear();
             ReferencePool.Release(m_ArrayPool);
         }
     }
