@@ -83,17 +83,23 @@ MonoBehaviour:
   multi_code_target: 0
   code_target: cs-bin
   code_targets: []
-  multi_data_target: 0
+  multi_data_target: 1
   data_target: bin
-  data_targets: []
+  data_targets:
+  - data_type: bin
+    output_dir: Assets/AssetsPackage/Data
+  - data_type: text-list
+    output_dir: DataTables/Output
+  - data_type: json
+    output_dir: DataTables/Output/json
   output_code_dir: Assets/Scripts/Hotfix/Common/Data/Gen
   output_data_dir: Assets/AssetsPackage/Data
   code_style: csharp-default
   data_exporter: default
   output_saver: local
-  l10n_text_provider_name: 
-  l10n_text_provider_file: 
-  l10n_text_list_file: 
+  l10n_text_provider_name: default
+  l10n_text_provider_file: DataTables/Datas/Language/Text.xlsx
+  l10n_text_list_file: UndefineText.txt
   path_validator_root_dir: 
   code_postprocess: []
   data_postprocess: []
@@ -114,17 +120,34 @@ MonoBehaviour:
 
     -d bin ^
 
+    -d text-list ^
+
+    -d json ^
+
     -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
     ^
 
-    -x outputDataDir=Assets/AssetsPackage/Data ^
+    -x bin.outputDataDir=Assets/AssetsPackage/Data ^
+
+    -x text-list.outputDataDir=DataTables/Output/
+    ^
+
+    -x json.outputDataDir=Assets/AssetsPackage/Data ^
 
     -x codeStyle=csharp-default
     ^
 
     -x dataExporter=default ^
 
-    -x outputSaver=local '
+    -x outputSaver=local ^
+
+    -x l10n.textProviderName=default
+    ^
+
+    -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
+
+    -x
+    l10n.textListFile=UndefineText.txt '
   _command_args: 'Tools/Luban/Luban.dll ^
 
     --conf DataTables/luban.conf ^
@@ -141,14 +164,31 @@ MonoBehaviour:
 
     -d bin ^
 
+    -d text-list ^
+
+    -d json ^
+
     -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
     ^
 
-    -x outputDataDir=Assets/AssetsPackage/Data ^
+    -x bin.outputDataDir=Assets/AssetsPackage/Data ^
+
+    -x text-list.outputDataDir=DataTables/Output/
+    ^
+
+    -x json.outputDataDir=Assets/AssetsPackage/Data ^
 
     -x codeStyle=csharp-default
     ^
 
     -x dataExporter=default ^
 
-    -x outputSaver=local '
+    -x outputSaver=local ^
+
+    -x l10n.textProviderName=default
+    ^
+
+    -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
+
+    -x
+    l10n.textListFile=UndefineText.txt '

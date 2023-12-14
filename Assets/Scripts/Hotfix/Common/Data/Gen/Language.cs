@@ -16,8 +16,8 @@ namespace Hotfix.Common.Data
     {
         public Language(ByteBuf _buf) 
         {
-            ID = _buf.ReadString();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Text = new System.Collections.Generic.Dictionary<L10n.LanguageType, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { L10n.LanguageType _k0;  _k0 = (L10n.LanguageType)_buf.ReadInt(); string _v0;  _v0 = _buf.ReadString();     Text.Add(_k0, _v0);}}
+            Id = _buf.ReadString();
+            Text = _buf.ReadString();
         }
 
         public static Language DeserializeLanguage(ByteBuf _buf)
@@ -26,10 +26,10 @@ namespace Hotfix.Common.Data
         }
 
         /// <summary>
-        /// ID
+        /// id
         /// </summary>
-        public readonly string ID;
-        public readonly System.Collections.Generic.Dictionary<L10n.LanguageType, string> Text;
+        public readonly string Id;
+        public readonly string Text;
     
         public const int __ID__ = -1548945544;
         public override int GetTypeId() => __ID__;
@@ -43,8 +43,8 @@ namespace Hotfix.Common.Data
         public override string ToString()
         {
             return "{ "
-            + "ID:" + ID + ","
-            + "text:" + Luban.StringUtil.CollectionToString(Text) + ","
+            + "id:" + Id + ","
+            + "text:" + Text + ","
             + "}";
         }
     }

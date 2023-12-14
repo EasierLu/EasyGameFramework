@@ -19,15 +19,7 @@ namespace Hotfix.Common.Data
             Id = _buf.ReadInt();
             FValue = _buf.ReadFloat();
             SValue = _buf.ReadString();
-            {
-                int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);
-                LsValue = new System.Collections.Generic.List<string>(n0);
-                for(var i0 = 0 ; i0 < n0 ; i0++) 
-                { 
-                    string _e0;  _e0 = _buf.ReadString();
-                    LsValue.Add(_e0);
-                }
-            }
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);LsValue = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); LsValue.Add(_e0);}}
         }
 
         public static Benchmark DeserializeBenchmark(ByteBuf _buf)
