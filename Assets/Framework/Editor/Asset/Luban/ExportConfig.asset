@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fed7fb4ed3b748f8a9f245b9b9bc97fa, type: 3}
-  m_Name: DefaultExportConfig
+  m_Name: ExportConfig
   m_EditorClassIdentifier: 
   config:
     data_dir: Datas
@@ -76,7 +76,7 @@ MonoBehaviour:
   schema_collector: 
   pipeline: 
   include_tag: 
-  exclude_tag: 
+  exclude_tag: dev,test
   time_zone: UTC
   custom_template_dir: DataTables/Templates
   output_table: []
@@ -88,8 +88,6 @@ MonoBehaviour:
   data_targets:
   - data_type: bin
     output_dir: Assets/AssetsPackage/Data
-  - data_type: text-list
-    output_dir: DataTables/Output
   - data_type: json
     output_dir: DataTables/Output/json
   output_code_dir: Assets/Scripts/Hotfix/Common/Data/Gen
@@ -97,9 +95,9 @@ MonoBehaviour:
   code_style: csharp-default
   data_exporter: default
   output_saver: local
-  l10n_text_provider_name: default
-  l10n_text_provider_file: DataTables/Datas/Language/Text.xlsx
-  l10n_text_list_file: UsedText.txt
+  l10n_text_provider_name: 
+  l10n_text_provider_file: 
+  l10n_text_list_file: 
   path_validator_root_dir: 
   code_postprocess: []
   data_postprocess: []
@@ -111,25 +109,23 @@ MonoBehaviour:
     -t
     client ^
 
+    -e dev,test ^
+
     --timeZone "UTC" ^
 
-    --customTemplateDir DataTables/Templates
-    ^
+    --customTemplateDir
+    DataTables/Templates ^
 
     -c cs-bin ^
 
     -d bin ^
 
-    -d text-list ^
-
     -d json ^
 
-    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
-    ^
+    -x
+    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
 
-    -x bin.outputDataDir=Assets/AssetsPackage/Data ^
-
-    -x text-list.outputDataDir=DataTables/Output
+    -x bin.outputDataDir=Assets/AssetsPackage/Data
     ^
 
     -x json.outputDataDir=DataTables/Output/json ^
@@ -139,15 +135,7 @@ MonoBehaviour:
 
     -x dataExporter=default ^
 
-    -x outputSaver=local ^
-
-    -x l10n.textProviderName=default
-    ^
-
-    -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
-
-    -x
-    l10n.textListFile=UsedText.txt '
+    -x outputSaver=local '
   _command_args: 'Tools/Luban/Luban.dll ^
 
     --conf DataTables/luban.conf ^
@@ -155,25 +143,23 @@ MonoBehaviour:
     -t
     client ^
 
+    -e dev,test ^
+
     --timeZone "UTC" ^
 
-    --customTemplateDir DataTables/Templates
-    ^
+    --customTemplateDir
+    DataTables/Templates ^
 
     -c cs-bin ^
 
     -d bin ^
 
-    -d text-list ^
-
     -d json ^
 
-    -x outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen
-    ^
+    -x
+    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
 
-    -x bin.outputDataDir=Assets/AssetsPackage/Data ^
-
-    -x text-list.outputDataDir=DataTables/Output
+    -x bin.outputDataDir=Assets/AssetsPackage/Data
     ^
 
     -x json.outputDataDir=DataTables/Output/json ^
@@ -183,12 +169,4 @@ MonoBehaviour:
 
     -x dataExporter=default ^
 
-    -x outputSaver=local ^
-
-    -x l10n.textProviderName=default
-    ^
-
-    -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
-
-    -x
-    l10n.textListFile=UsedText.txt '
+    -x outputSaver=local '
