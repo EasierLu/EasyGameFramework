@@ -77,7 +77,7 @@ MonoBehaviour:
   pipeline: 
   include_tag: 
   exclude_tag: 
-  time_zone: China Standard Time
+  time_zone: UTC
   custom_template_dir: DataTables/Templates
   output_table: []
   multi_code_target: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   output_saver: local
   l10n_text_provider_name: default
   l10n_text_provider_file: DataTables/Datas/Language/Text.xlsx
-  l10n_text_list_file: UndefineText.txt
+  l10n_text_list_file: UsedText.txt
   path_validator_root_dir: 
   code_postprocess: []
   data_postprocess: []
@@ -111,7 +111,7 @@ MonoBehaviour:
     -t
     client ^
 
-    --timeZone "China Standard Time" ^
+    --timeZone "UTC" ^
 
     --customTemplateDir DataTables/Templates
     ^
@@ -129,10 +129,10 @@ MonoBehaviour:
 
     -x bin.outputDataDir=Assets/AssetsPackage/Data ^
 
-    -x text-list.outputDataDir=DataTables/Output/
+    -x text-list.outputDataDir=DataTables/Output
     ^
 
-    -x json.outputDataDir=Assets/AssetsPackage/Data ^
+    -x json.outputDataDir=DataTables/Output/json ^
 
     -x codeStyle=csharp-default
     ^
@@ -147,7 +147,7 @@ MonoBehaviour:
     -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
 
     -x
-    l10n.textListFile=UndefineText.txt '
+    l10n.textListFile=UsedText.txt '
   _command_args: 'Tools/Luban/Luban.dll ^
 
     --conf DataTables/luban.conf ^
@@ -155,7 +155,7 @@ MonoBehaviour:
     -t
     client ^
 
-    --timeZone "China Standard Time" ^
+    --timeZone "UTC" ^
 
     --customTemplateDir DataTables/Templates
     ^
@@ -173,10 +173,10 @@ MonoBehaviour:
 
     -x bin.outputDataDir=Assets/AssetsPackage/Data ^
 
-    -x text-list.outputDataDir=DataTables/Output/
+    -x text-list.outputDataDir=DataTables/Output
     ^
 
-    -x json.outputDataDir=Assets/AssetsPackage/Data ^
+    -x json.outputDataDir=DataTables/Output/json ^
 
     -x codeStyle=csharp-default
     ^
@@ -191,4 +191,4 @@ MonoBehaviour:
     -x l10n.textProviderFile=DataTables/Datas/Language/Text.xlsx ^
 
     -x
-    l10n.textListFile=UndefineText.txt '
+    l10n.textListFile=UsedText.txt '
