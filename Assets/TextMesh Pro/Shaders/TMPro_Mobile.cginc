@@ -70,7 +70,7 @@ pixel_t VertShader(vertex_t input)
     output.position = vPosition;
     output.faceColor = faceColor;
     output.outlineColor = outlineColor;
-    output.texcoord0 = float4(input.texcoord0.xy, maskUV.xy);
+    output.texcoord0 = float4(input.texcoord0.xy, maskuv[0].xy);
     output.param = float4(0.5 - weight, 1.3333 * _GradientScale * (_Sharpness + 1) / _TextureWidth, _OutlineWidth * _ScaleRatioA * 0.5, 0);
 
     float2 mask = float2(0, 0);
@@ -100,7 +100,7 @@ float4 PixShader(pixel_t input) : SV_Target
     float d = tex2D(_MainTex, input.texcoord0.xy).a;
 
     float2 UV = input.texcoord0.xy;
-    float scale = rsqrt(abs(ddx(UV.x) * ddy(UV.y) - ddy(UV.x) * ddx(UV.y))) * input.param.y;
+    float scale = rsqrt(abs(ddx(uv[0].x) * ddy(uv[0].y) - ddy(uv[0].x) * ddx(uv[0].y))) * input.param.y;
 
     #if (UNDERLAY_ON | UNDERLAY_INNER)
     float layerScale = scale;

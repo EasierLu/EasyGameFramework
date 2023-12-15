@@ -180,7 +180,7 @@ SubShader {
 			output.vertex = vPosition;
 			output.faceColor = faceColor;
 			output.outlineColor = outlineColor;
-			output.texcoord0 = float4(input.texcoord0.x, input.texcoord0.y, maskUV.x, maskUV.y);
+			output.texcoord0 = float4(input.texcoord0.x, input.texcoord0.y, maskuv[0].x, maskuv[0].y);
 			output.param = half4(scale, bias - outline, bias + outline, bias);
 			output.mask = half4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * half2(_MaskSoftnessX, _MaskSoftnessY) + pixelSize.xy));
 			#if (UNDERLAY_ON || UNDERLAY_INNER)
