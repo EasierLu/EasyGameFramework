@@ -76,3 +76,5 @@ DataTables/**/~$*
 .vscode/
 DataTables/Output/
 yoo/
+Assets/StreamingAssets.meta
+Assets/StreamingAssets/

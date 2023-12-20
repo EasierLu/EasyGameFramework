@@ -5,6 +5,8 @@ namespace YooAsset.Editor
 {
 	public static class AssetBundleSimulateBuilder
 	{
+		public const bool ENABLE_LOG = false;
+
 		/// <summary>
 		/// 模拟构建
 		/// </summary>
@@ -25,7 +27,7 @@ namespace YooAsset.Editor
 				buildParameters.BuildinFileCopyParams = string.Empty;
 
 				BuiltinBuildPipeline pipeline = new BuiltinBuildPipeline();
-				var buildResult = pipeline.Run(buildParameters, false);
+				var buildResult = pipeline.Run(buildParameters, ENABLE_LOG);
 				if (buildResult.Success)
 				{
 					string manifestFileName = YooAssetSettingsData.GetManifestBinaryFileName(buildParameters.PackageName, buildParameters.PackageVersion);
@@ -52,7 +54,7 @@ namespace YooAsset.Editor
 				buildParameters.BuildinFileCopyParams = string.Empty;
 
 				ScriptableBuildPipeline pipeline = new ScriptableBuildPipeline();
-				var buildResult = pipeline.Run(buildParameters, false);
+				var buildResult = pipeline.Run(buildParameters, ENABLE_LOG);
 				if (buildResult.Success)
 				{
 					string manifestFileName = YooAssetSettingsData.GetManifestBinaryFileName(buildParameters.PackageName, buildParameters.PackageVersion);
@@ -79,7 +81,7 @@ namespace YooAsset.Editor
 				buildParameters.BuildinFileCopyParams = string.Empty;
 
 				RawFileBuildPipeline pipeline = new RawFileBuildPipeline();
-				var buildResult = pipeline.Run(buildParameters, true);
+				var buildResult = pipeline.Run(buildParameters, ENABLE_LOG);
 				if (buildResult.Success)
 				{
 					string manifestFileName = YooAssetSettingsData.GetManifestBinaryFileName(buildParameters.PackageName, buildParameters.PackageVersion);

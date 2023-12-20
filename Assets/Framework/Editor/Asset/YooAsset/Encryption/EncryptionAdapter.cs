@@ -1,8 +1,5 @@
-using EGFramework.Runtime;
 using EGFramework.Runtime.Asset;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using EGFramework.Runtime.Setting;
 using YooAsset;
 using YooAsset.Editor;
 

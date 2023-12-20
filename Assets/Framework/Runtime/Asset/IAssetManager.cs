@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace EGFramework.Runtime
 {
@@ -8,29 +10,20 @@ namespace EGFramework.Runtime
         public string readWritePath { get; set; }
         public AssetMode assetMode { get; set; }
         public string updataUrl { get; set; }
-
         public string version { get; }
 
-        UniTaskVoid Initialize();
+        UniTask<Scene> LoadSceneAsync(string path, LoadSceneMode sceneMode, bool active = false, string packageName = null, uint priority = 0);
 
-        UniTask LoadSceneAsync();
+        T LoadAsset<T>(string path, string packageName = null) where T : Object;
 
-        T LoadAsset<T>(string path) where T : UnityEngine.Object;
+        UniTask<T> LoadAssetAsync<T>(string path, string packageName = null, uint priority = 100) where T : Object;
 
-        UniTask<T> LoadAssetAsync<T>(string path) where T : UnityEngine.Object;
+        byte[] LoadRawFile(string path, string packageName = null);
 
-        UnityEngine.Object[] LoadAllAasset(string path);
+        UniTask<byte[]> LoadRawFileAsync(string path, string packageName = null, uint priority = 100);
 
-        UniTask<UnityEngine.Object[]> LoadAllAssetAsync(string path);
+        void Unload(string path, string packageName = null);
 
-        byte[] LoadRawFile(string path);
-
-        UniTask<byte[]> LoadRawFileAsync(string path);
-
-        UniTaskVoid ReleaseAsset(string path);
-
-        UniTaskVoid ReleaseRawFile(string path);
-
-        void UnloadAssets();
+        void UnloadUnused();
     }
 }
