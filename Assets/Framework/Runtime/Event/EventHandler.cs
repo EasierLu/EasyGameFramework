@@ -27,7 +27,7 @@ namespace EGFramework.Runtime.Event
         {
             if (ArrayPool.Length < m_AsyncEvents.Count)
             {
-                Log.Fatal($"Can not add async event,array pool is not enough.[{EventKey}]");
+                Log.Error($"Can not add async event,array pool is not enough.[{EventKey}]");
                 return;
             }
 
@@ -122,7 +122,7 @@ namespace EGFramework.Runtime.Event
         {
             if (ArrayPool.Length < m_AsyncEvents.Count)
             {
-                Log.Fatal($"Can not add async event,array pool is not enough.[{EventKey}]");
+                Log.Error($"Can not add async event,array pool is not enough.[{EventKey}]");
                 return;
             }
 

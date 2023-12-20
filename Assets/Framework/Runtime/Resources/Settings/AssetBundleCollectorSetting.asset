@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185f6993d5150494d98da50e26cb1c25, type: 3}
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
-  ShowPackageView: 0
+  ShowPackageView: 1
   ShowEditorAlias: 1
   UniqueBundleName: 0
   Packages:
-  - PackageName: DefaultPackage
+  - PackageName: Default
     PackageDesc: "\u9ED8\u8BA4\u6253\u5305"
     EnableAddressable: 0
     LocationToLower: 0
@@ -66,9 +66,17 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+  - PackageName: RawFile
+    PackageDesc: "\u539F\u59CB\u6587\u4EF6"
+    EnableAddressable: 0
+    LocationToLower: 0
+    IncludeAssetGUID: 0
+    IgnoreDefaultType: 1
+    AutoCollectShaders: 1
+    Groups:
     - GroupName: Data
-      GroupDesc: "\u914D\u7F6E\u8868"
-      AssetTags: Data
+      GroupDesc: "\u6570\u636E\u8868"
+      AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/AssetsPackage/Data

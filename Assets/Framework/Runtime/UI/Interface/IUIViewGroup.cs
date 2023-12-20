@@ -1,0 +1,16 @@
+using Cysharp.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace EGFramework.Runtime.UI
+{
+    public interface IUIViewGroup
+    {
+        public UIWindow Window { get;}
+
+        public UniTask Init();
+
+        public List<UIView> GetViews();
+    }
+}

@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd12740e1f5be946a0c229ebb2e45e9, type: 3}
   m_Name: FrameworkGlobalSettings
   m_EditorClassIdentifier: 
-  m_AssetEncryptionMode: 0
+  m_RuntimeAssetMode: 2
+  m_AssetEncryption: 0
+  m_DefaultAssetsPackage: Default
+  m_AssetsPackageInfo:
+  - name: Default
+    buildPipeline: 1
+  - name: RawFile
+    buildPipeline: 2

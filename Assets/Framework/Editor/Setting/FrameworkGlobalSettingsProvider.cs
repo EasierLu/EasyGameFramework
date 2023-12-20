@@ -33,6 +33,8 @@ namespace EGFramework.Editor.Setting
 
             EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_RuntimeAssetMode"));
             EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_AssetEncryption"));
+            EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_DefaultAssetsPackage"));
+            EditorGUILayout.PropertyField(m_SettingData.FindProperty("m_AssetsPackageInfo"));
             EditorGUILayout.LabelField("123");
 
             EditorGUILayout.Space(20);

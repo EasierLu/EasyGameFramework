@@ -13,7 +13,7 @@ namespace EGFramework.Runtime.Util
             Info, 
             Warning, 
             Error, 
-            Fatal
+            Exception
         }
 
         private static LogLevel m_LogLevel = LogLevel.Debug;
@@ -65,14 +65,9 @@ namespace EGFramework.Runtime.Util
             InnerLogFormat(LogLevel.Error, fmt, args);
         }
 
-        public static void Fatal(object msg)
+        public static void Exception(Exception e)
         {
-            InnerLog(LogLevel.Error, msg);
-        }
-
-        public static void FatalFormat(string fmt, params object[] args)
-        {
-            InnerLogFormat(LogLevel.Fatal, fmt, args);
+            InnerLogFormat(LogLevel.Exception, "{0}/n{1}", e.Message, e.StackTrace);
         }
 
         private static void InnerLog(LogLevel level ,object msg)
@@ -89,7 +84,7 @@ namespace EGFramework.Runtime.Util
                     UnityEngine.Debug.LogWarning(msg);
                     break;
                 case LogLevel.Error:
-                case LogLevel.Fatal:
+                case LogLevel.Exception:
                     UnityEngine.Debug.LogError(msg);
                     break;
                 case LogLevel.Debug:

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using EGFramework.Runtime.Base;
 using EGFramework.Runtime.Fsm;
 using EGFramework.Runtime.Util;
@@ -9,7 +10,7 @@ namespace EGFramework.Runtime
     /// <summary>
     /// 有限状态机管理器。
     /// </summary>
-    public sealed class FsmManager : FrameworkModule
+    public sealed class FsmManager : FrameworkComponent
     {
         private readonly Dictionary<TypeNamePair, FsmBase> m_Fsms;
         private readonly List<FsmBase> m_TempFsms;
@@ -27,7 +28,7 @@ namespace EGFramework.Runtime
         /// 获取游戏框架模块优先级。
         /// </summary>
         /// <remarks>优先级较高的模块会优先轮询，并且关闭操作会后进行。</remarks>
-        internal override int Priority
+        public override int Priority
         {
             get
             {
@@ -51,7 +52,7 @@ namespace EGFramework.Runtime
         /// </summary>
         /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        internal override void Update(float elapseSeconds, float realElapseSeconds)
+        public override void ComponentUpdate(float elapseSeconds, float realElapseSeconds)
         {
             m_TempFsms.Clear();
             if (m_Fsms.Count <= 0)
@@ -78,7 +79,7 @@ namespace EGFramework.Runtime
         /// <summary>
         /// 关闭并清理有限状态机管理器。
         /// </summary>
-        internal override void Shutdown()
+        public override async UniTask Shutdown()
         {
             foreach (KeyValuePair<TypeNamePair, FsmBase> fsm in m_Fsms)
             {
@@ -87,6 +88,7 @@ namespace EGFramework.Runtime
 
             m_Fsms.Clear();
             m_TempFsms.Clear();
+            await UniTask.Yield();
         }
 
         /// <summary>
@@ -403,5 +405,6 @@ namespace EGFramework.Runtime
 
             return false;
         }
+
     }
 }

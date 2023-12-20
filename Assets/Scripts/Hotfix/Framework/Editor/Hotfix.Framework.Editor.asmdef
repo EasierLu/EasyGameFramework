@@ -1,13 +1,12 @@
 {
-    "name": "Hotfix.Demo",
+    "name": "Hotfix.Framework.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:15e51a89972cfa04880866fa08590075",
-        "GUID:0a3fa25500b6c6a45b471767cd3b71cb",
         "GUID:66fe0b95fdf950043bc3491cfc886d7f"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

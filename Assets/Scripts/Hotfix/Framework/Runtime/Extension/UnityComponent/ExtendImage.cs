@@ -1,12 +1,13 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
+using EGFramework.Runtime;
+using EGFramework.Runtime.Asset;
+using EGFramework.Runtime.Base;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Sprites;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-namespace EGFramework.Runtime.Extension
+namespace Hotfix.Framework.Runtime
 {
     public class ExtendImage : UnityEngine.UI.Image
     {
@@ -38,6 +39,15 @@ namespace EGFramework.Runtime.Extension
         public Sprite AsyncLoadingSprite { get => m_AsyncLoadingSprite; set => m_AsyncLoadingSprite = value; }
         private string m_CurrentSpritePath = null;
 
+
+        private IAssetManager m_AssetManager;
+
+        public void SetSprite(Sprite s)
+        { 
+            m_CurrentSpritePath = null;
+            sprite = s;
+        }
+
         /// <summary>
         /// 同步加载图片
         /// </summary>
@@ -61,14 +71,12 @@ namespace EGFramework.Runtime.Extension
             }
             string oldSpritePath = m_CurrentSpritePath;
             m_CurrentSpritePath = path;
-            //TODO: 异步加载图片
-            //bool hasCache = xxxxx(path);
-            //Sprite currentOverride = overrideSprite
-            //if (!hasCache && m_LoadingSprite != null)
-            //{
-            //  overrideSprite = m_LoadingSprite;
-            //}
-            Sprite s = null;// await InnerLoadSpriteAsync(path);
+            Sprite currentOverrideSprite = overrideSprite;
+            if (m_AsyncLoadingSprite != null)
+            {
+                overrideSprite = m_AsyncLoadingSprite;
+            }
+            Sprite s = await InnerLoadSpriteAsync(path);
 
             if (path == m_CurrentSpritePath && this != null)
             {
@@ -79,9 +87,22 @@ namespace EGFramework.Runtime.Extension
                 else
                 {
                     sprite = s;
-                    //overrideSprite = currentOverride
+                    overrideSprite = currentOverrideSprite;
                 }
             }
+        }
+
+        protected virtual async UniTask<Sprite> InnerLoadSpriteAsync(string path)
+        {
+            if (m_AssetManager == null)
+            { 
+                m_AssetManager = FrameworkCore.GetComponent<AssetManager>();
+                if (m_AssetManager == null)
+                {
+                    return null;
+                }
+            }
+            return await m_AssetManager.LoadAssetAsync<Sprite>(path);
         }
 
         protected override void OnPopulateMesh(VertexHelper vh)

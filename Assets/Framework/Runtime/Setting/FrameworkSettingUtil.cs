@@ -1,12 +1,8 @@
 using EGFramework.Runtime.Base;
-using EGFramework.Runtime.Setting;
 using EGFramework.Runtime.Util;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace EGFramework.Runtime
+namespace EGFramework.Runtime.Setting
 {
     public class FrameworkSettingUtil
     {
