@@ -13,6 +13,8 @@ namespace Hotfix.Common.Data
 {
     public partial class Tables
     {
+        public const int TABLES_COUNT = 7;
+
         /// <summary> 例子 </summary>
         public Example.TbExampleBaseStruct TbExampleBaseStruct {get; private set;}
         /// <summary> 进阶例子 </summary>
@@ -47,47 +49,41 @@ namespace Hotfix.Common.Data
             ResolveRef();
         }
 
-        private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader, System.IProgress<float> progress)
+        private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader)
         {
-            int tablesNum = 7;
+            var startTime = System.DateTime.Now;
+
+            Cysharp.Threading.Tasks.UniTask<ByteBuf>[] tasks = new Cysharp.Threading.Tasks.UniTask<ByteBuf>[TABLES_COUNT];
+
             
-            //例子
-            var TbExampleBaseStruct_loader = await loader("example_tbexamplebasestruct");
-            TbExampleBaseStruct = new Example.TbExampleBaseStruct(TbExampleBaseStruct_loader);
-            progress?.Report(1f / tablesNum);
+            tasks[0] = loader("example_tbexamplebasestruct");
+            tasks[1] = loader("example_tbexampleextendstruct");
+            tasks[2] = loader("example_tbbenchmark");
+            tasks[3] = loader("example_tbexampleitemdata");
+            tasks[4] = loader("item_tbitemdata");
+            tasks[5] = loader("config_tbglobalconfig");
+            tasks[6] = loader("l10n_tblanguage");
 
-            //进阶例子
-            var TbExampleExtendStruct_loader = await loader("example_tbexampleextendstruct");
-            TbExampleExtendStruct = new Example.TbExampleExtendStruct(TbExampleExtendStruct_loader);
-            progress?.Report(2f / tablesNum);
+            var bytebufs = await Cysharp.Threading.Tasks.UniTask.WhenAll(tasks);
 
-            //测试
-            var TbBenchmark_loader = await loader("example_tbbenchmark");
-            TbBenchmark = new Example.TbBenchmark(TbBenchmark_loader);
-            progress?.Report(3f / tablesNum);
+            float time = (float)(System.DateTime.Now - startTime).TotalMilliseconds;
+            EGFramework.Runtime.Util.Log.DebugFormat("加载耗时:{0}", time);
+            startTime = System.DateTime.Now;
 
-            //道具例子
-            var TbExampleItemData_loader = await loader("example_tbexampleitemdata");
-            TbExampleItemData = new Example.TbExampleItemData(TbExampleItemData_loader);
-            progress?.Report(4f / tablesNum);
-
-            //道具表
-            var TbItemData_loader = await loader("item_tbitemdata");
-            TbItemData = new Item.TbItemData(TbItemData_loader);
-            progress?.Report(5f / tablesNum);
-
-            //全局配置表
-            var TbGlobalConfig_loader = await loader("config_tbglobalconfig");
-            TbGlobalConfig = new Config.TbGlobalConfig(TbGlobalConfig_loader);
-            progress?.Report(6f / tablesNum);
-
-            //语言表
-            var TbLanguage_loader = await loader("l10n_tblanguage");
-            TbLanguage = new L10n.TbLanguage(TbLanguage_loader);
-            progress?.Report(7f / tablesNum);
-
+            
+            TbExampleBaseStruct = new Example.TbExampleBaseStruct(bytebufs[0]);
+            TbExampleExtendStruct = new Example.TbExampleExtendStruct(bytebufs[1]);
+            TbBenchmark = new Example.TbBenchmark(bytebufs[2]);
+            TbExampleItemData = new Example.TbExampleItemData(bytebufs[3]);
+            TbItemData = new Item.TbItemData(bytebufs[4]);
+            TbGlobalConfig = new Config.TbGlobalConfig(bytebufs[5]);
+            TbLanguage = new L10n.TbLanguage(bytebufs[6]);
 
             ResolveRef();
+
+            time = (float)(System.DateTime.Now - startTime).TotalMilliseconds;
+            EGFramework.Runtime.Util.Log.DebugFormat("处理耗时:{0}", time);
+            startTime = System.DateTime.Now;
         }
         
         private void ResolveRef()

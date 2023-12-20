@@ -3,6 +3,8 @@ using Luban;
 {{namespace_with_grace_begin __namespace}}
     public partial class {{__name}}
     {
+        public const int TABLES_COUNT = {{__tables.size}};
+
         {{~for table in __tables ~}}
     {{~if table.comment != '' ~}}
         /// <summary> {{escape_comment table.comment}} </summary>
@@ -19,19 +21,33 @@ using Luban;
             ResolveRef();
         }
 
-        private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader, System.IProgress<float> progress)
+        private async Cysharp.Threading.Tasks.UniTask LoadAsync(System.Func<string, Cysharp.Threading.Tasks.UniTask<ByteBuf>> loader)
         {
-            int tablesNum = {{__tables.size}};
+            var startTime = System.DateTime.Now;
+
+            Cysharp.Threading.Tasks.UniTask<ByteBuf>[] tasks = new Cysharp.Threading.Tasks.UniTask<ByteBuf>[TABLES_COUNT];
+
             {{index = 0}}
             {{~for table in __tables ~}}
-            //{{escape_comment table.comment}}
-            var {{format_property_name __code_style table.name}}_loader = await loader("{{table.output_data_file}}");
-            {{format_property_name __code_style table.name}} = new {{table.full_name}}({{format_property_name __code_style table.name}}_loader);
-            progress?.Report({{++index}}f / tablesNum);
+            tasks[{{index++}}] = loader("{{table.output_data_file}}");
+            {{~end~}}
 
+            var bytebufs = await Cysharp.Threading.Tasks.UniTask.WhenAll(tasks);
+
+            float time = (float)(System.DateTime.Now - startTime).TotalMilliseconds;
+            EGFramework.Runtime.Util.Log.DebugFormat("加载耗时:{0}", time);
+            startTime = System.DateTime.Now;
+
+            {{index = 0}}
+            {{~for table in __tables ~}}
+            {{format_property_name __code_style table.name}} = new {{table.full_name}}(bytebufs[{{index++}}]);
             {{~end~}}
 
             ResolveRef();
+
+            time = (float)(System.DateTime.Now - startTime).TotalMilliseconds;
+            EGFramework.Runtime.Util.Log.DebugFormat("处理耗时:{0}", time);
+            startTime = System.DateTime.Now;
         }
         
         private void ResolveRef()
