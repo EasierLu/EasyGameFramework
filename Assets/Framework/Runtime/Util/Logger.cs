@@ -67,7 +67,7 @@ namespace EGFramework.Runtime.Util
 
         public static void Exception(Exception e)
         {
-            InnerLogFormat(LogLevel.Exception, "{0}/n{1}", e.Message, e.StackTrace);
+            InnerLogFormat(LogLevel.Exception, "{0}\n{1}", e.Message, e.StackTrace);
         }
 
         private static void InnerLog(LogLevel level ,object msg)
@@ -108,8 +108,29 @@ namespace EGFramework.Runtime.Util
         private static string AddLabel(LogLevel level, object msg) 
         {
 #if UNITY_EDITOR
-            string labelFmt = "<color={2}>[{0}]</color>{1}";
-            string color = level <= LogLevel.Info ? "gray" : level <= LogLevel.Warning ? "yellow" : "red";
+            string labelFmt = "<color={2}>[<b>{0}</b>]</color>{1}";
+
+            string color = level <= LogLevel.Info ? "green" : level <= LogLevel.Warning ? "yellow" : "red";
+            switch (level)
+            {
+                case LogLevel.Debug:
+                    color = "navy";
+                    break;
+                case LogLevel.Info:
+                    color = "green";
+                    break;
+                case LogLevel.Warning:
+                    color = "orange";
+                    break;
+                case LogLevel.Error:
+                    color = "brown";
+                    break;
+                case LogLevel.Exception:
+                    color = "red";
+                    break;
+                default:
+                    break;
+            }
             return Utility.Text.Format(labelFmt, level.ToString(), msg, color);
 #else
             string labelFmt = "[{0}]{1}";

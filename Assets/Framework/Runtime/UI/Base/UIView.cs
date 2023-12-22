@@ -7,11 +7,13 @@ namespace EGFramework.Runtime
 {
     public abstract class UIView : MonoBehaviour
     {
-        public UIWindow Window { get; private set; }
+        public int id { get; private set; }
+        public UIWindow window { get; private set; }
 
-        public void Init(UIWindow window)
+        public void Init(UIWindow window, int id)
         {
-            Window = window;
+            this.window = window;
+            this.id = id;
             InitComponent();
         }
 
@@ -23,5 +25,14 @@ namespace EGFramework.Runtime
         }
 
         protected abstract void OnDataChanged(params object[] data);
+
+        public void Release()
+        {
+            id = -1;
+            window = null;
+        }
+
+        protected virtual void OnRelease()
+        { }
     }
 }

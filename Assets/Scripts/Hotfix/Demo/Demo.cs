@@ -53,7 +53,11 @@ public class Demo : MonoBehaviour
 
         //Log.Info("TriggerEvent Success");
 
-        
+        Log.Debug("Debug");
+        Log.Info("Info");
+        Log.Warning("Warning");
+        Log.Error("Error");
+        Log.Exception(new System.Exception("Exception"));
     }
 
     private async UniTask InitAsset()
