@@ -26,9 +26,13 @@ namespace Luban.Editor
         {
             var guids = AssetDatabase.FindAssets("t:LubanExportConfig");
 
-            if(guids.Length > 0)
+            if(guids.Length > 1)
             {
                 Debug.LogWarning("Found multiple Luban assets, using the first one");
+                foreach (var guid in guids)
+                {
+                    Debug.LogWarning(AssetDatabase.GUIDToAssetPath(guid));
+                }
             }
 
             switch(guids.Length)

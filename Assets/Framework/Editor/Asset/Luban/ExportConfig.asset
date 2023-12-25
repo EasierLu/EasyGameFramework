@@ -87,10 +87,10 @@ MonoBehaviour:
   data_target: bin
   data_targets:
   - data_type: bin
-    output_dir: Assets/AssetsPackage/Data
+    output_dir: Assets/AssetsPackage/Data/Config
   - data_type: json
     output_dir: DataTables/Output/json
-  output_code_dir: Assets/Scripts/Hotfix/Common/Data/Gen
+  output_code_dir: Assets/Scripts/Hotfix/Common/Data/Config
   output_data_dir: Assets/AssetsPackage/Data
   code_style: csharp-default
   data_exporter: default
@@ -123,9 +123,9 @@ MonoBehaviour:
     -d json ^
 
     -x
-    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
+    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Config ^
 
-    -x bin.outputDataDir=Assets/AssetsPackage/Data
+    -x bin.outputDataDir=Assets/AssetsPackage/Data/Config
     ^
 
     -x json.outputDataDir=DataTables/Output/json ^
@@ -157,9 +157,9 @@ MonoBehaviour:
     -d json ^
 
     -x
-    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Gen ^
+    outputCodeDir=Assets/Scripts/Hotfix/Common/Data/Config ^
 
-    -x bin.outputDataDir=Assets/AssetsPackage/Data
+    -x bin.outputDataDir=Assets/AssetsPackage/Data/Config
     ^
 
     -x json.outputDataDir=DataTables/Output/json ^
