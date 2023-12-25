@@ -41,9 +41,9 @@ namespace EGFramework.Runtime
             throw new System.NotImplementedException();
         }
 
-        public UniTask<GameObject> LoadGameObjectAsync(string path, Transform parent = null)
-        { 
-            
+        public async UniTask<GameObject> LoadGameObjectAsync(string path, Transform parent = null)
+        {
+            return null;
         }
 
         public int GetIncrementId()

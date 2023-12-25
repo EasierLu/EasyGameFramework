@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EGFramework.Runtime.Base
 {
-    public abstract class FrameworkComponent : MonoBehaviour
+    public class FrameworkComponent : MonoBehaviour
     {
         public virtual int Priority => FrameworkComponentPriority.Custom;
 
@@ -14,8 +14,16 @@ namespace EGFramework.Runtime.Base
             await UniTask.Yield();
         }
 
-        public abstract void ComponentUpdate(float elapseSeconds, float realElapseSeconds);
+        public virtual void ComponentUpdate(float elapseSeconds, float realElapseSeconds) { }
 
-        public abstract UniTask Shutdown();
+        public virtual async UniTask Shutdown()
+        { 
+            await UniTask.Yield();
+        }
+
+        public T GetFrameworkComponent<T>() where T : FrameworkComponent
+        { 
+            return FrameworkCore.GetComponent<T>();
+        }
     }
 }
