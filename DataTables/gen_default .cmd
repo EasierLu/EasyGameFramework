@@ -10,8 +10,8 @@
 -c cs-bin ^
 -d bin ^
 -d json ^
--x outputCodeDir=%WORKSPACE%/Assets/Scripts/Hotfix/Common/Data/Gen ^
--x bin.outputDataDir=%WORKSPACE%/Assets/AssetsPackage/Data ^
+-x outputCodeDir=%WORKSPACE%/Assets/Scripts/Hotfix/Common/Data/Config ^
+-x bin.outputDataDir=%WORKSPACE%/Assets/AssetsPackage/Data/Config ^
 -x json.outputDataDir=%WORKSPACE%/DataTables/Output/json ^
 -x codeStyle=csharp-default ^
 -x dataExporter=default ^
