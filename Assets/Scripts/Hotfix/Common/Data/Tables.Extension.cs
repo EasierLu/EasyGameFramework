@@ -18,7 +18,7 @@ namespace Hotfix.Common.Data
             var startTime = DateTime.Now;
 
             Load(Loader);
-
+            AssetManager.UnloadUnused();
             float time = (float)(DateTime.Now - startTime).TotalMilliseconds;
             Log.InfoFormat("配置加载完成...{0}ms", time);
         }
@@ -33,7 +33,7 @@ namespace Hotfix.Common.Data
             var startTime = DateTime.Now;
 
             await LoadAsync(AsyncLoader);
-
+            AssetManager.UnloadUnused();
             float time = (float)(DateTime.Now - startTime).TotalMilliseconds;
             Log.InfoFormat("配置加载完成...{0}ms", time);
         }
@@ -64,7 +64,6 @@ namespace Hotfix.Common.Data
         {
             string path = ToAssetPath(name);
             var bytes = await AssetManager.LoadRawFileAsync(path, "RawFile");
-            AssetManager.Unload(path, "RawFile");
 
             return new ByteBuf(bytes);
         }
@@ -73,7 +72,6 @@ namespace Hotfix.Common.Data
         {
             string path = ToAssetPath(name);
             var bytes = AssetManager.LoadRawFile(path, "RawFile");
-            AssetManager.Unload(path, "RawFile");
 
             return new ByteBuf(bytes);
         }

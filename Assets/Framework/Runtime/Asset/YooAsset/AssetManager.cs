@@ -1,14 +1,11 @@
 using Cysharp.Threading.Tasks;
-using EGFramework.Runtime;
 using EGFramework.Runtime.Base;
 using EGFramework.Runtime.Util;
 using EGFramework.Runtime.YooAsset;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace EGFramework.Runtime.Asset
 {
@@ -156,6 +153,15 @@ namespace EGFramework.Runtime.Asset
             if (packageHandler != null)
             {
                 packageHandler.UnloadAsset(path);
+            }
+        }
+
+        public void TryUnloadUnused(string path, string packageName = null)
+        {
+            var packageHandler = GetPackageHandler(packageName);
+            if (packageHandler != null)
+            {
+                packageHandler.TryUnloadUnusedAsset(path);
             }
         }
 

@@ -24,6 +24,8 @@ namespace EGFramework.Runtime
 
         void Unload(string path, string packageName = null);
 
+        void TryUnloadUnused(string path, string packageName = null);
+
         void UnloadUnused();
     }
 }

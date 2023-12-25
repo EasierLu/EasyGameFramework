@@ -96,12 +96,13 @@ namespace EGFramework.Runtime.YooAsset
         public void Dispose()
         {
             m_ScenecCache.Clear();
+            m_AssetHandle.Clear();
             YooAssets.DestroyPackage(m_PackageName);
         }
         #endregion
 
         #region Unload
-        public void UnloadAsset(string assetName)
+        public void TryUnloadUnusedAsset(string assetName)
         {
             m_Package.TryUnloadUnusedAsset(assetName);
         }

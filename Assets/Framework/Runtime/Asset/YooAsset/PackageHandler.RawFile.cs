@@ -13,6 +13,7 @@ namespace EGFramework.Runtime.YooAsset
             if (loadOperation.Status == EOperationStatus.Succeed)
             {
                 var data = loadOperation.GetRawFileData();
+                loadOperation.Release();
                 return data;
             }
             else
@@ -29,6 +30,7 @@ namespace EGFramework.Runtime.YooAsset
             if (loadOperation.Status == EOperationStatus.Succeed)
             {
                 var data = loadOperation.GetRawFileData();
+                loadOperation.Release();
                 return data;
             }
             else
